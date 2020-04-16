@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guoguo.ynz.dao.user.UserDao">
+
+    <select id="getUserList" resultType="com.guoguo.ynz.entity.user.User">
+        select id,mobile,`name`,password,add_time
+        from ynz_user
+        where status=0
+    </select>
+    <select id="getUserRolePermissionList" resultType="com.guoguo.ynz.entity.user.UserRolePermission">
+        select
+        ynz_user.mobile,
+        ynz_user.password,
+        ynz_role.name roleName,
+        ynz_permission.name permissionName
+        from ynz_user
+        left join ynz_user_role on ynz_user.id=ynz_user_role.user_id
+        left join ynz_role_permission on ynz_user_role.role_id=ynz_role_permission.role_id
+        left join ynz_role on ynz_user_role.role_id=ynz_role.id
+        left join ynz_permission on ynz_role_permission.permission_id=ynz_permission.id
+    </select>
+</mapper>
