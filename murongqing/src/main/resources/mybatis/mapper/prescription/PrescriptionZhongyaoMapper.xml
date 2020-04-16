@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guoguo.murongqing.dao.prescription.PrescriptionZhongyaoDao">
+    <insert id="addPzBatch">
+        insert into murongqing_prescription_zhongyao(`prescription_id`,`name`,add_time,dosage) values
+        <foreach collection="list" item="pz" separator=",">
+            (#{pz.prescriptionId},#{pz.name},now(),#{pz.dosage})
+        </foreach>
+    </insert>
+    <select id="getPzListByPId" resultType="com.guoguo.murongqing.entity.prescription.PrescriptionZhongyao">
+        select `name`,dosage from murongqing_prescription_zhongyao where prescription_id=#{value} and `delete`=0
+    </select>
+</mapper>

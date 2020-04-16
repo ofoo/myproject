@@ -1,0 +1,22 @@
+<div id="qrCode" style="padding: 5px;border: gray solid 1px;width: 300px;height: 300px;cursor: pointer;margin: 0 auto;" onclick="print()"></div>
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/qrcode.min.js"></script>
+<script src="/js/jquery.jqprint-0.3.js"></script>
+<script th:inline="javascript">
+    $(function(){
+        var id = [[${id}]];
+        var qrcode = new QRCode("qrCode", {
+            text: "http://192.168.43.14:8080/warehouse/goods/quantity/update/"+id,
+            width: 300,
+            height: 300,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });
+    })
+
+    // 打印
+    function print() {
+        $("#qrCode").jqprint();
+    }
+</script>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guoguo.murongqing.dao.zhongyao.ZhongyaoDao">
+
+    <resultMap id="ZhongyaoResult" type="Zhongyao">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="x" column="x"/>
+        <result property="y" column="y"/>
+        <result property="addTime" column="add_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="delete" column="delete"/>
+        <result property="image" column="image"/>
+        <result property="price" column="price"/>
+        <result property="weight" column="weight"/>
+    </resultMap>
+
+    <sql id="murongqing_zhongyao_columns">
+		murongqing_zhongyao.id,
+		murongqing_zhongyao.name,
+		murongqing_zhongyao.x,
+		murongqing_zhongyao.y,
+		murongqing_zhongyao.add_time,
+		murongqing_zhongyao.update_time,
+		murongqing_zhongyao.delete,
+		murongqing_zhongyao.image,
+		murongqing_zhongyao.price,
+		murongqing_zhongyao.weight
+	</sql>
+
+    <sql id="murongqing_zhongyao_properties">
+		#{id},
+		#{name},
+		#{x},
+		#{y},
+		now(),
+		now(),
+		0,
+		#{image},
+		#{price},
+		#{weight}
+	</sql>
+
+    <sql id="murongqing_zhongyao_common_columns">
+		murongqing_zhongyao.id,
+		murongqing_zhongyao.name,
+		murongqing_zhongyao.x,
+		murongqing_zhongyao.y,
+		murongqing_zhongyao.image,
+		murongqing_zhongyao.price,
+		murongqing_zhongyao.weight
+	</sql>
+
+    <insert id="addZhongyao" useGeneratedKeys="true" keyProperty="id">
+        insert into murongqing_zhongyao(`name`,x,y,image,price,weight,category_id,dosage)
+        value(#{name},#{x},#{y},#{image},#{price},#{weight},#{categoryId},#{dosage})
+    </insert>
+
+    <update id="updateZhongyao">
+        update murongqing_zhongyao set
+        `name`=#{name},
+        `x`=#{x},
+        `y`=#{y},
+        `image`=#{image},
+        `price`=#{price},
+        `weight`=#{weight},
+        category_id=#{categoryId}
+        where id=#{id}
+        and `delete`=0
+    </update>
+
+    <update id="updateZhongyaoDeleteByIds">
+        update murongqing_zhongyao set
+        `delete`=#{delete}
+        where `delete`=0
+        and id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="getZhongyaoList" resultMap="ZhongyaoResult">
+        select <include refid="murongqing_zhongyao_common_columns"/> from murongqing_zhongyao
+        <where>
+            `delete`=0
+            <if test="name!=null">
+                and `name` like CONCAT('%',#{name},'%')
+            </if>
+        </where>
+
+    </select>
+    
+    <select id="getZhongyaoById" resultMap="ZhongyaoResult">
+        select <include refid="murongqing_zhongyao_common_columns"/> from murongqing_zhongyao where id=#{id} and `delete`=0
+    </select>
+
+    <select id="getZhongyaoAll" resultMap="ZhongyaoResult">
+        select id,`name`,category_id categoryId from murongqing_zhongyao where `delete`=0
+    </select>
+    <select id="getZhongyaoByCategoryId" resultType="com.guoguo.murongqing.entity.zhongyao.Zhongyao">
+        select id,`name` from murongqing_zhongyao where category_id=#{value} and `delete`=0
+    </select>
+</mapper>

@@ -1,0 +1,69 @@
+<div class="layui-card" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="layui-card-body">
+        <form class="layui-form">
+            <input type="hidden" name="id" th:value="${goods==null}?'':${goods.id}">
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="请输入商品名称" th:value="${goods==null}?'':${goods.name}"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">品牌名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="brandName" lay-verify="required" autocomplete="off" placeholder="请输入商品名称" th:value="${goods==null}?'':${goods.brandName}"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品原价</label>
+                <div class="layui-input-block">
+                    <input type="text" name="price" lay-verify="required|number" placeholder="请输入商品单价" th:value="${goods==null}?'':${goods.price}"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品售价</label>
+                <div class="layui-input-block">
+                    <input type="text" name="sellingPrice" lay-verify="required|number" placeholder="请输入商品单价" th:value="${goods==null}?'':${goods.price}"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品数量</label>
+                <div class="layui-input-block">
+                    <input type="text" name="quantity" lay-verify="required|number" placeholder="请输入商品数量" th:value="${goods==null}?'':${goods.quantity}"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="button" class="layui-btn" lay-submit lay-filter="*">提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    layui.form.on('submit(*)', function(data){
+        layui.$.ajax({
+            url: '/warehouse/goods/ajax/save',
+            type: 'post',
+            data: data.field,
+            dataType: 'json',
+            success: function (result) {
+                if (result.success) {
+                    layer.msg(result.msg,{time:1000},function () {
+                        layer.closeAll();
+                        tableReload();
+                    })
+                }else{
+                    layer.msg(result.msg)
+                }
+            }
+        });
+        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+    });
+</script>

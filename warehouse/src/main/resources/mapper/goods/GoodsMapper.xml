@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guoguo.warehouse.dao.goods.GoodsDao">
+    <select id="selectAll" resultType="com.guoguo.warehouse.entity.goods.Goods">
+        select * from warehouse_goods ${ew.customSqlSegment}
+    </select>
+    <select id="selectGoodsPage" resultType="com.guoguo.warehouse.entity.goods.Goods">
+        select * from warehouse_goods ${ew.customSqlSegment}
+    </select>
+    <select id="getGoodsListPage" resultType="com.guoguo.warehouse.entity.goods.Goods">
+        select
+        warehouse_goods.id,
+        warehouse_goods.name,
+        warehouse_brand.name brandName,
+        warehouse_goods.selling_price,
+        warehouse_goods.price,
+        warehouse_goods.quantity,
+        warehouse_goods.up_goods_quantity upGoodsQuantity,
+        warehouse_goods.add_time addTime
+        from warehouse_goods
+        left join warehouse_brand on warehouse_goods.brand_id=warehouse_brand.id
+        ${ew.customSqlSegment}
+    </select>
+</mapper>

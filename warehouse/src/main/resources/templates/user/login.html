@@ -1,0 +1,40 @@
+<div class="layui-card" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="layui-card-header" style="text-align: center;color: #009688"><h2 th:text="${sysName}">商店管理系统</h2></div>
+    <div class="layui-card-body">
+        <form class="layui-form">
+            <div class="layui-form-item">
+                <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="请输入账号"
+                       class="layui-input">
+            </div>
+            <div class="layui-form-item">
+                <input type="password" name="pwd" lay-verify="required" autocomplete="off" placeholder="请输入密码"
+                       class="layui-input">
+            </div>
+            <div class="layui-form-item">
+                <button type="button" class="layui-btn layui-btn-fluid" lay-submit lay-filter="*">登录</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript" src="/js/md5.js"></script>
+<script>
+    layui.form.on('submit(*)', function (data) {
+        data.field.pwd=hex_md5(data.field.pwd);
+        layui.$.ajax({
+            url: '/warehouse/user/ajax/login',
+            type: 'post',
+            data: data.field,
+            dataType: 'json',
+            success: function (result) {
+                if (result.success) {
+                    layer.msg(result.msg,{time:1000},function () {
+                        location.href='/warehouse/goods/list';
+                    })
+                }else{
+                    layer.msg(result.msg)
+                }
+            }
+        });
+        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+    });
+</script>
