@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>登录</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+</head>
+<body>
+
+
+<script src="/layui/layui.all.js"></script>
+<script>
+    layui.$(function(){
+        layui.$.post('/warehouse/user/login', {}, function(str){
+            layer.open({
+                type: 1,
+                content: str, //这里content是一个普通的String
+                resize:false,
+                title:false,
+                closeBtn:0,
+                area: '360px',
+                shade: 0,
+            });
+        });
+    })
+</script>
+</body>
+</html>

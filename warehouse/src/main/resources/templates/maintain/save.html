@@ -1,0 +1,76 @@
+<div class="layui-card" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="layui-card-body">
+        <form class="layui-form">
+            <input type="hidden" name="id" th:value="${maintain==null}?'':${maintain.id}">
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="goodsName" lay-verify="required" autocomplete="off" placeholder="请输入维修商品名称" th:value="${maintain==null}?'':${maintain.goodsName}"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">品牌名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="brandName" lay-verify="" placeholder="请输入品牌名称" th:value="${maintain==null}?'':${maintain.brandName}"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">维修价格</label>
+                <div class="layui-input-block">
+                    <input type="text" name="sellingPrice" lay-verify="required|number" placeholder="请输入维修价格" th:value="${maintain==null}?'':${maintain.sellingPrice}"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">顾客名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="clientName" lay-verify="required" placeholder="请输入顾客名称" th:value="${maintain==null}?'':${maintain.clientName}"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">顾客电话</label>
+                <div class="layui-input-block">
+                    <input type="text" name="clientPhone" lay-verify="required|number" placeholder="请输入顾客手机" th:value="${maintain==null}?'':${maintain.clientPhone}"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">顾客住址</label>
+                <div class="layui-input-block">
+                    <input type="text" name="clientAddress" lay-verify="required" placeholder="请输入顾客住址" th:value="${maintain==null}?'':${maintain.clientAddress}"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="button" class="layui-btn" lay-submit lay-filter="*">提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    layui.form.on('submit(*)', function(data){
+        layui.$.ajax({
+            url: '/warehouse/maintain/ajax/save',
+            type: 'post',
+            data: data.field,
+            dataType: 'json',
+            success: function (result) {
+                if (result.success) {
+                    layer.msg(result.msg,{time:1000},function () {
+                        layer.closeAll();
+                        tableReload();
+                    })
+                }else{
+                    layer.msg(result.msg)
+                }
+            }
+        });
+        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+    });
+</script>

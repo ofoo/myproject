@@ -1,0 +1,39 @@
+# 自定义配置
+system:
+  name: 商店管理系统
+  login:
+    # 管理员账号
+    name: admin
+    # 管理员密码
+    pwd: 123
+  domain:
+    # 网站域名
+    name: http://localhost:8080
+
+# SpringBoot配置
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/warehouse?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 666666
+  thymeleaf:
+    cache: false
+
+# 日志配置
+logging:
+  level:
+    root: warn
+    com.guoguo.warehouse.dao: trace
+  pattern:
+    console: '%p%m%n'
+
+# mybatis-plus配置
+mybatis-plus:
+  global-config:
+    db-config:
+      # 数据表主键自增
+      id-type: auto
+      # 数据表前缀
+      table-prefix: warehouse_
+  type-aliases-package: com.guoguo.warehouse.entity
+  mapper-locations: classpath:/mapper/**/*.xml

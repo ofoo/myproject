@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guoguo.murongqing.dao.user.UserDao">
+
+    <resultMap id="UserResult" type="User">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="pwd" column="pwd"/>
+        <result property="image" column="image"/>
+        <result property="position" column="position"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="murongqing_user_columns">
+		murongqing_user.id,
+		murongqing_user.name,
+		murongqing_user.pwd,
+		murongqing_user.image,
+		murongqing_user.position,
+		murongqing_user.create_time,
+		murongqing_user.update_time
+	</sql>
+
+    <sql id="murongqing_user_properties">
+		#{id},
+		#{name},
+		#{pwd},
+		#{image},
+		#{position},
+		now(),
+		now()
+	</sql>
+
+    <insert id="addUser">
+        insert into murongqing_user(<include refid="murongqing_user_columns"/>)
+        value(<include refid="murongqing_user_properties"/>)
+    </insert>
+
+    <update id="updateUserName">
+        update murongqing_user set `name`=#{name},update_time=now() where id=#{id}
+    </update>
+
+    <update id="updateUserImage">
+        update murongqing_user set `image`=#{image},update_time=now() where id=#{id}
+    </update>
+
+    <update id="updateUserPwd">
+        update murongqing_user set `pwd`=#{pwd},update_time=now() where id=#{id}
+    </update>
+
+    <update id="updateUser">
+        update murongqing_user set
+        `name`=#{name},
+        `position`=#{position},
+        image=#{image},
+        update_time=now()
+        where id=#{id}
+    </update>
+
+    <select id="getUserList" resultMap="UserResult">
+        select id,`name`,image,`position`
+        from murongqing_user
+        <where>
+            <if test="name!=null">
+                and name like CONCAT('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getUserByName" resultMap="UserResult">
+        select id,`name`,pwd,image,`position`
+        from murongqing_user where `name`=#{value}
+    </select>
+
+    <select id="getUserById" resultType="com.guoguo.murongqing.entity.user.User">
+        select id,`name`,image,`position` from murongqing_user where id=#{id}
+    </select>
+
+    <select id="getUserCountByName" resultType="java.lang.Integer">
+        select ifnull(count(1),0) from murongqing_user where `name`=#{name};
+    </select>
+</mapper>
