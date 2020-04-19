@@ -1,4 +1,4 @@
-package com.hongying.lingtianxiang;
+package com.guoguo.lingtianxiang;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

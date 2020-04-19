@@ -1,79 +1,89 @@
-package com.base.cn.platform.os.service.${entity?lower_case};
+package ${packName}.service.${entity?lower_case};
 
-import com.base.cn.platform.os.entity.${entity?lower_case}.${entity?cap_first};
-import com.base.cn.platform.os.entity.${entity?lower_case}.${entity?cap_first}Condition;
-import com.base.cn.platform.os.service.FeignAuthConfig;
-import com.base.cn.platform.os.service.manage.BaseService;
-import com.github.pagehelper.PageInfo;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.PageUtil;
+import ${packName}.dao.${entity?lower_case}.${entity?cap_first}Dao;
+import ${packName}.entity.${entity?lower_case}.${entity?cap_first};
+import ${packName}.tool.constant.${entity?cap_first}Constant;
+import ${packName}.tool.result.DataJson;
+import ${packName}.tool.result.ResultJson;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 /**
- * ${explain}数据接口
+ * ${explain}
  */
-@FeignClient(value = BaseService.appName,configuration = FeignAuthConfig.class)
-public interface ${entity?cap_first}Service extends BaseService {
+@Service
+public class ${entity?cap_first}Service {
+
+    @Autowired
+    private ${entity?cap_first}Dao ${entity?lower_case}Dao;
 
     /**
-     * ${explain}列表带分页
-     * @param condition
-     * @param currentPage
+     * 按id查询${explain}
+     *
+     * @param id
      * @return
      */
-    @RequestMapping(contextPath + "/get${entity?cap_first}ListByPage")
-    PageInfo<${entity?cap_first}> get${entity?cap_first}ListByPage(@RequestBody ${entity?cap_first}Condition condition, @RequestParam("currentPage") int currentPage);
+    public ${entity?cap_first} get${entity?cap_first}ById(Long id) {
+        return ${entity?lower_case}Dao.get${entity?cap_first}ById(id);
+    }
 
     /**
-     *${explain}列表无分页
-     * @param condition
+     * 按id删除${explain}
+     *
+     * @param ${entity?lower_case}List
      * @return
      */
-    @RequestMapping(contextPath + "/get${entity?cap_first}List")
-    List<${entity?cap_first}> get${entity?cap_first}List(@RequestBody ${entity?cap_first}Condition condition);
+    public ResultJson delete${entity?cap_first}ByIds(List<${entity?cap_first}> ${entity?lower_case}List) {
+        int rows = ${entity?lower_case}Dao.delete${entity?cap_first}ByIds(${entity?lower_case}List);
+        if (rows > 0) {
+            return ResultJson.yes(${entity?cap_first}Constant.YES);
+        }
+        return ResultJson.no(${entity?cap_first}Constant.NO);
+    }
 
     /**
-     * 根据id查询
-     * @param condition
+     * 保存${explain}
+     *
+     * @param ${entity?lower_case}
      * @return
      */
-    @RequestMapping(contextPath + "/get${entity?cap_first}ById")
-    ${entity?cap_first} get${entity?cap_first}ById(@RequestBody ${entity?cap_first}Condition condition);
+    public ResultJson save${entity?cap_first}(${entity?cap_first} ${entity?lower_case}) {
+        if (ObjectUtil.isNotNull(${entity?lower_case}.getId())) {
+            // 修改${explain}
+            int rows = ${entity?lower_case}Dao.update${entity?cap_first}ById(${entity?lower_case});
+            if (rows > 0) {
+                return ResultJson.yes(${entity?cap_first}Constant.YES);
+            }
+        } else {
+            // 添加${explain}
+            int rows = ${entity?lower_case}Dao.add${entity?cap_first}(${entity?lower_case});
+            if (rows > 0) {
+                return ResultJson.yes(${entity?cap_first}Constant.YES);
+            }
+        }
+        return ResultJson.no(${entity?cap_first}Constant.NO);
+    }
 
     /**
-     * 根据条件查询
-     * @param condition
+     * 分页查询${explain}
+     *
+     * @param ${entity?lower_case}
      * @return
      */
-    @RequestMapping(contextPath + "/get${entity?cap_first}")
-    ${entity?cap_first} get${entity?cap_first}(@RequestBody ${entity?cap_first}Condition condition);
+    public DataJson get${entity?cap_first}List(${entity?cap_first} ${entity?lower_case}) {
+        // 查询分页页数
+        int[] ints = PageUtil.transToStartEnd(${entity?lower_case}.getPage() - 1, ${entity?lower_case}.getLimit());
+        ${entity?lower_case}.setPage(ints[0]);
+        ${entity?lower_case}.setLimit(ints[1]);
+        List<${entity?cap_first}> list = ${entity?lower_case}Dao.get${entity?cap_first}List(${entity?lower_case});
+        // 查询总页数
+        Integer totalCount = ${entity?lower_case}Dao.get${entity?cap_first}ListCount(${entity?lower_case});
+        int totalPage = PageUtil.totalPage(totalCount, ${entity?lower_case}.getLimit());
 
-    /**
-     * 修改${explain}状态
-     * @param condition
-     * @return
-     */
-    @RequestMapping(contextPath + "/update${entity?cap_first}StatusByIds")
-    Map<String,Object> update${entity?cap_first}StatusByIds(@RequestBody ${entity?cap_first}Condition condition);
-
-    /**
-     * 后台保存${explain}基本信息
-     * @param ${entity?uncap_first}
-     * @return
-     */
-    @RequestMapping(contextPath + "/save${entity?cap_first}")
-    Map<String,Object> save${entity?cap_first}(@RequestBody ${entity?cap_first} ${entity?uncap_first});
-
-    /**
-     * 后台保存${explain}基本信息
-     * @param ${entity?uncap_first}List
-     * @return
-     */
-    @RequestMapping(contextPath + "/save${entity?cap_first}Batch")
-    Map<String,Object> save${entity?cap_first}Batch(@RequestBody List<${entity?cap_first}> ${entity?uncap_first}List);
-
+        return DataJson.list(totalPage, list);
+    }
 }

@@ -8,9 +8,10 @@
         <version>2.1.7.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.hongying</groupId>
+    <groupId>com.guoguo</groupId>
     <artifactId>lingtianxiang</artifactId>
     <version>1.0</version>
+    <packaging>war</packaging>
     <name>lingtianxiang</name>
     <description>Demo project for Spring Boot</description>
 
@@ -45,6 +46,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -52,9 +58,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <executable>true</executable>
-                </configuration>
             </plugin>
         </plugins>
     </build>

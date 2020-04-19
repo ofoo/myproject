@@ -1,107 +1,111 @@
-package com.base.cn.platform.os.controller.${entity?lower_case};
+package ${packName}.controller.${entity?lower_case};
 
-import com.base.cn.platform.os.common.controller.BaseController;
-import com.base.cn.platform.os.common.mybatis.Pagination;
-import com.base.cn.platform.os.common.utils.result.ResultUtil;
-import com.base.cn.platform.os.entity.${entity?lower_case}.${entity?cap_first};
-import com.base.cn.platform.os.entity.${entity?lower_case}.${entity?cap_first}Condition;
-import com.base.cn.platform.os.service.${entity?lower_case}.${entity?cap_first}Biz;
-import com.github.pagehelper.PageInfo;
+import ${packName}.entity.${entity?lower_case}.${entity?cap_first};
+import ${packName}.service.${entity?lower_case}.${entity?cap_first}Service;
+import ${packName}.tool.constant.${entity?cap_first}Constant;
+import ${packName}.tool.result.DataJson;
+import ${packName}.tool.result.ResultJson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.math.BigDecimal;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 
 /**
- * ${explain}controller
+ * ${explain}
  */
-@RestController
-@RequestMapping("/manage")
-public class ${entity?cap_first}Controller extends BaseController {
+@Controller
+@RequestMapping("/ynz/${entity?lower_case}")
+public class ${entity?cap_first}Controller {
 
     @Autowired
-    private ${entity?cap_first}Biz ${entity?uncap_first}Biz;
+    private ${entity?cap_first}Service ${entity?lower_case}Service;
 
     /**
-     * 查询${explain}列表带分页
-     * @param condition
-     * @param currentPage
+     * 获取页面路径
+     *
+     * @param pageName
      * @return
      */
-    @RequestMapping("/get${entity?cap_first}ListByPage")
-    public PageInfo<${entity?cap_first}> get${entity?cap_first}ListByPage(@RequestBody ${entity?cap_first}Condition condition, @RequestParam("currentPage") int currentPage){
-        Pagination page = new Pagination();
-        page.setCurrentPage(currentPage);
-        PageInfo<${entity?cap_first}> ${entity?uncap_first}PageInfo = ${entity?uncap_first}Biz.get${entity?cap_first}ListByPage(condition,page);
-        return ${entity?uncap_first}PageInfo;
+    public String getPagePath(String pageName) {
+        String pagePackage = "${entity?lower_case}/";
+        return pagePackage + pageName;
     }
 
     /**
-     * 查询${explain}列表无分页
-     * @param condition
+     * 列表页面
+     *
+     * @param request
      * @return
      */
-    @RequestMapping("/get${entity?cap_first}List")
-    public List<${entity?cap_first}> get${entity?cap_first}List(@RequestBody ${entity?cap_first}Condition condition){
-        List<${entity?cap_first}> ${entity?uncap_first}List = ${entity?uncap_first}Biz.get${entity?cap_first}List(condition);
-        return ${entity?uncap_first}List;
+    @RequestMapping("/list")
+    public String list(HttpServletRequest request) {
+        request.setAttribute("listPageTitle", ${entity?cap_first}Constant.ADD_PAGE_TITLE);
+        request.setAttribute("addPageTitle", ${entity?cap_first}Constant.ADD_PAGE_TITLE);
+        request.setAttribute("updatePageTitle", ${entity?cap_first}Constant.ADD_PAGE_TITLE);
+        return getPagePath("list");
     }
 
     /**
-     * 根据id查询
+     * 分页查询${explain}
+     *
+     * @param ${entity?lower_case}
+     * @return
+     */
+    @RequestMapping("/ajax/list")
+    @ResponseBody
+    public DataJson ajaxList(${entity?cap_first} ${entity?lower_case}) {
+        return ${entity?lower_case}Service.get${entity?cap_first}List(${entity?lower_case});
+    }
+
+    /**
+     * 添加页面
+     *
+     * @return
+     */
+    @RequestMapping("/add")
+    public String add() {
+        return getPagePath("save");
+    }
+
+    /**
+     * 修改页面
+     *
      * @param id
      * @return
      */
-    @RequestMapping("/get${entity?cap_first}ById")
-    public ${entity?cap_first} get${entity?cap_first}ById(@RequestParam("id") BigDecimal id){
-        return ${entity?uncap_first}Biz.get${entity?cap_first}ById(id);
-    }
-
-    /**
-     * 根据条件查询
-     * @param condition
-     * @return
-     */
-    @RequestMapping("/get${entity?cap_first}")
-    public ${entity?cap_first} get${entity?cap_first}(@RequestBody ${entity?cap_first}Condition condition){
-        return ${entity?uncap_first}Biz.get${entity?cap_first}(condition);
-    }
-
-    /**
-     * 修改${explain}状态
-     * @param condition
-     * @return
-     */
-    @RequestMapping("/updateStatusByIds")
-    public Map<String,Object> updateStatusByIds(@RequestBody ${entity?cap_first}Condition condition){
-        ${entity?uncap_first}Biz.updateStatusByIds(condition);
-        return ResultUtil.SUCCESS("${explain}状态修改成功");
+    @RequestMapping("/update/{id}")
+    public String update(@PathVariable Long id, HttpServletRequest request) {
+        ${entity?cap_first} ${entity?lower_case} = ${entity?lower_case}Service.get${entity?cap_first}ById(id);
+        request.setAttribute("${entity?lower_case}", ${entity?lower_case});
+        return getPagePath("save");
     }
 
     /**
      * 保存${explain}
-     * @param ${entity?uncap_first}
+     *
+     * @param ${entity?lower_case}
      * @return
      */
-    @RequestMapping("/save${entity?cap_first}")
-    public Map<String,Object> save${entity?cap_first}(@RequestBody ${entity?cap_first} ${entity?uncap_first}){
-        ${entity?uncap_first}Biz.save${entity?cap_first}(${entity?uncap_first});
-        return ResultUtil.SUCCESS("保存成功",${entity?uncap_first});
+    @RequestMapping("/ajax/save")
+    @ResponseBody
+    public ResultJson ajaxSave(@RequestBody ${entity?cap_first} ${entity?lower_case}) {
+        return ${entity?lower_case}Service.save${entity?cap_first}(${entity?lower_case});
     }
 
     /**
-     * 批量保存${explain}
-     * @param ${entity?uncap_first}List
+     * 删除${explain}
+     *
+     * @param ${entity?lower_case}List
      * @return
      */
-    @RequestMapping("/save${entity?cap_first}Batch")
-    public Map<String,Object> save${entity?cap_first}Batch(@RequestBody List<${entity?cap_first}> ${entity?uncap_first}List){
-        ${entity?uncap_first}Biz.batchSave(${entity?uncap_first}List);
-        return ResultUtil.SUCCESS("保存成功",${entity?uncap_first}List);
+    @RequestMapping("/ajax/delete")
+    @ResponseBody
+    public ResultJson ajaxDelete(@RequestBody List<${entity?cap_first}> ${entity?lower_case}List) {
+        return ${entity?lower_case}Service.delete${entity?cap_first}ByIds(${entity?lower_case}List);
     }
 }
