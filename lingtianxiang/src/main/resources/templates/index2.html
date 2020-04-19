@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+</head>
+<body>
+<div class="page-header"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <form id="dataForm">
+                <div class="form-group form-group-sm">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="fun" value="add" checked> <span class="label label-success">添加</span>
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="fun" value="del" checked> <span class="label label-danger">删除</span>
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="fun" value="upd" checked> <span class="label label-primary">修改</span>
+                    </label>
+                    <label class="checkbox-inline disabled">
+                        <input type="checkbox" name="fun" value="list" checked disabled> <span class="label label-default">列表</span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="div1">数据库名称</label>
+                    <input type="text" class="form-control" name="database" id="div1" placeholder="请输入数据库名称">
+                </div>
+                <div class="form-group">
+                    <label for="div2">实体类名称</label>
+                    <input type="text" class="form-control" name="entity" id="div2" placeholder="请输入实体类名称">
+                </div>
+                <div class="form-group" id="attrCon">
+                    <label>属性</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" tabindex="1" name="attr" placeholder="请输入属性名称">
+                        <a href="javascript:void(0)" class="input-group-addon delAttr">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </div>
+            </form>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" id="addAttr">添加属性</button>
+            </div>
+            <button type="button" class="btn btn-primary btn-block" id="createCode">提交</button>
+        </div>
+    </div>
+</div>
+
+<script src="/assets/js/jquery-3.3.1.js"></script>
+<script src="/assets/layer/layer.js"></script>
+<script>
+    $("#addAttr").on("click",function(){
+        var tabindex=$("[name='attr']").length+1;
+        var str = '<div class="input-group">' +
+            '    <input type="text" class="form-control" tabindex="'+(tabindex)+'" name="attr" placeholder="请输入属性名称">' +
+            '    <a href="javascript:void(0)" class="input-group-addon" onclick="delAttr(this)">' +
+            '        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>' +
+            '    </a>' +
+            '</div>';
+        $("#attrCon").append(str);
+    })
+    $(".delAttr").on("click",function(){
+        $(this).parent().remove();
+        resetTabindex();
+    })
+    function delAttr(em){
+        $(em).parent().remove();
+        resetTabindex();
+    }
+    function resetTabindex(){
+        $("[name='attr']").each(function (index) {
+            $(this).attr("tabindex",(index+1));
+        })
+    }
+    $("#createCode").on("click",function(){
+        $.ajax({
+            url: "/create/code",
+            type: "post",
+            data: $("#dataForm").serialize(),
+            dataType: "json",
+            success: function (result) {
+                layer.msg("构建成功");
+            }
+        });
+    })
+</script>
+</body>
+</html>
