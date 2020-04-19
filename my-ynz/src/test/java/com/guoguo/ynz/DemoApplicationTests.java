@@ -1,4 +1,4 @@
-package com.guoguo.ltx;
+package com.guoguo.ynz;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

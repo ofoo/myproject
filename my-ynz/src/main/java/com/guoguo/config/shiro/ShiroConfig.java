@@ -1,8 +1,10 @@
 package com.guoguo.config.shiro;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.guoguo.ynz.dao.user.UserDao;
 import com.guoguo.ynz.entity.user.UserRolePermission;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.realm.Realm;
@@ -50,6 +52,7 @@ public class ShiroConfig {
     }
 
     private Map<String, String> processData(List<UserRolePermission> userRolePermissionList) {
+        System.out.println("我来查库了");
         Map<String, String> dataMap = new HashMap<>();
         if (ObjectUtil.isNull(userRolePermissionList)) {
             return dataMap;
@@ -70,7 +73,9 @@ public class ShiroConfig {
             }
 
             if (rolePermissionMap.containsKey(userRolePermission.getRoleName())) {
-                rolePermissionMap.get(userRolePermission.getRoleName()).add(userRolePermission.getPermissionName());
+                if (!rolePermissionMap.get(userRolePermission.getRoleName()).contains(userRolePermission.getPermissionName())) {
+                    rolePermissionMap.get(userRolePermission.getRoleName()).add(userRolePermission.getPermissionName());
+                }
             } else {
                 List<String> list = new ArrayList<>();
                 list.add(userRolePermission.getPermissionName());
@@ -82,19 +87,21 @@ public class ShiroConfig {
         for (Map.Entry<String, List<String>> entry : userRoleMap.entrySet()) {
             StringBuffer roleStr = new StringBuffer();
             for (String roleName : entry.getValue()) {
-                roleStr.append(",");
-                roleStr.append(roleName);
-                StringBuffer permissionStr = new StringBuffer();
-                for (String permissionName : rolePermissionMap.get(roleName)) {
-                    permissionStr.append(permissionName);
-                    permissionStr.append(",");
+                if (StrUtil.isNotBlank(roleName)) {
+                    roleStr.append(",");
+                    roleStr.append(roleName);
+                    StringBuffer permissionStr = new StringBuffer();
+                    for (String permissionName : rolePermissionMap.get(roleName)) {
+                        permissionStr.append(permissionName);
+                        permissionStr.append(",");
+                    }
+                    permissionStr.deleteCharAt(permissionStr.length() - 1);
+                    role.append(roleName + "=" + permissionStr.toString());
+                    role.append(separator);
                 }
-                permissionStr.deleteCharAt(permissionStr.length() - 1);
-                role.append(roleName + "=" + permissionStr.toString());
-                role.append(separator);
             }
-            user.append(entry.getKey() + roleStr.toString());
-            role.append(separator);
+            user.append(entry.getKey() + (roleStr != null ? roleStr.toString() : ""));
+            user.append(separator);
         }
         dataMap.put("user", user.toString());
         dataMap.put("role", role.toString());
@@ -106,8 +113,8 @@ public class ShiroConfig {
         DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
         chainDefinition.addPathDefinition("/login", "authc"); // need to accept POSTs from the login form
         chainDefinition.addPathDefinition("/logout", "logout");
-        chainDefinition.addPathDefinition("/", "authc");
-        chainDefinition.addPathDefinition("/ynz/**", "authc");
+//        chainDefinition.addPathDefinition("/", "authc");
+//        chainDefinition.addPathDefinition("/ynz/**", "authc");
         return chainDefinition;
     }
 
