@@ -27,7 +27,7 @@ public class TaskLabelServiceImpl implements TaskLabelService {
 
     @Override
     public PageInfo<TaskLabel> getTaskLabelListPage(TaskLabel taskLabel) {
-        PageHelper.startPage(taskLabel.getPageNum(), taskLabel.getPageSize(), "id desc");
+        PageHelper.startPage(taskLabel.getPageNum()==null?1:taskLabel.getPageNum(), taskLabel.getPageSize()==null?10:taskLabel.getPageSize(), "id desc");
         List<TaskLabel> list = taskLabelDao.getTaskLabelList(taskLabel);
         PageInfo<TaskLabel> pageInfo = new PageInfo<>(list);
         return pageInfo;

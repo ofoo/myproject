@@ -28,7 +28,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public PageInfo<Member> getMemberListPage(Member member) {
-        PageHelper.startPage(member.getPageNum(), member.getPageSize(), "id desc");
+        PageHelper.startPage(member.getPageNum()==null?1:member.getPageNum(), member.getPageSize()==null?10:member.getPageSize(), "id desc");
         List<Member> list = memberDao.getMemberList(member);
         PageInfo<Member> pageInfo = new PageInfo<>(list);
         return pageInfo;

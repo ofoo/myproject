@@ -81,7 +81,7 @@
     // 添加项目
     $("#project-insert").on("click", function () {
         layer.prompt({title: '添加项目'}, function (pass, index) {
-            ajaxFunParam("/fyl/project/ajax/insert", {'name': pass}, function (data) {
+            ajaxFunParam("/fyl/project/ajax/save", {'name': pass}, function (data) {
                 if (data.status == 0) {
                     ajaxFunText("/fyl/project/ajax/list", function (data) {
                         $("#projectId").html(data);
@@ -94,7 +94,7 @@
     // 添加任务标签
     $("#taskLabel-insert").on("click", function () {
         layer.prompt({title: '添加任务标签'}, function (pass, index) {
-            ajaxFunParam("/fyl/taskLabel/ajax/insert", {'name': pass}, function (data) {
+            ajaxFunParam("/fyl/taskLabel/ajax/save", {'name': pass}, function (data) {
                 if (data.status == 0) {
                     ajaxFunText("/fyl/taskLabel/ajax/list", function (data) {
                         $("#projectId").html(data);
