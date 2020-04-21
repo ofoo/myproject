@@ -51,11 +51,11 @@
 }
 
 .panel {
-    margin-top: 50px;
+    margin-top: 100px;
 }
 
 .panel .panel-body {
-    padding: 20px 15px 15px;
+    padding: 0 15px 15px;
 }
 
 .page-header {
@@ -69,11 +69,16 @@
 }
 
 .login {
+    margin: 100px auto;
+    width: 450px;
     text-align: center;
     border: 1px solid #ccc;
     border-radius: 8px;
-    padding: 0 30px 20px;
-    margin-top: 40%;
+    padding: 0 30px 40px;
+}
+
+.login .page-header,.login .form-group{
+    margin-bottom: 25px;
 }
 
 h1 {

@@ -5,11 +5,20 @@ package com.guoguo.common;
  */
 public class CommonConstant {
     /**
-     * 正常
+     * 数据状态：正常
      */
-    private static final int GREEN=0;
+    public static final int GREEN = 0;
     /**
-     * 删除
+     * 数据状态：删除
      */
-    private static final int RED=1;
+    public static final int RED = 1;
+
+    /**
+     * 正确提示
+     */
+    public static final String GREEN_MSG="操作成功";
+    /**
+     * 错误提示
+     */
+    public static final String RED_MSG = "操作失败";
 }

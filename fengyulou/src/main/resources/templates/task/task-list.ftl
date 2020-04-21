@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <#assign title="用户库">
+    <#assign title="任务管理">
     <#include "../common/header-script.ftl">
 </head>
 <body>
@@ -13,28 +13,44 @@
             <input type="hidden" name="pageNum" id="pageNum">
             <div class="row">
                 <div class="col-md-3">
-                    <input name="name" id="name" type="text" class="form-control" value="${(user.name)!}" placeholder="用户名称">
+                    <input name="name" id="name" type="text" class="form-control" value="<#--${(user.name)!}-->" placeholder="项目名称">
+                </div>
+                <div class="col-md-3">
+                    <input name="name" id="name" type="text" class="form-control" value="<#--${(user.name)!}-->" placeholder="任务简介">
                 </div>
                 <div class="col-md-2">
                     <button type="button" class="btn btn-info" data-page="1" id="fengyulou-search">查询</button>
-                    <button type="button" class="btn btn-warning" id="fengyulou-clear">清空</button>
+                    <button type="reset" class="btn btn-warning">清空</button>
                 </div>
             </div>
         </form>
+        <div class="fun-btn btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-success" id="fengyulou-insert">添加</button>
+            <button type="button" class="btn btn-primary" id="fengyulou-update">修改</button>
+            <button type="button" class="btn btn-danger" id="fengyulou-delete">删除</button>
+        </div>
+        <form id="dataForm"></form>
         <table class="table table-bordered table-hover">
             <thead>
             <tr>
-                <th width="15%"><strong>用户名称</strong></th>
-                <th><strong>用户职位</strong></th>
+                <th><strong>项目名称</strong></th>
+                <th><strong>任务简述</strong></th>
+                <th><strong>任务标签</strong></th>
+                <th><strong>任务状态</strong></th>
+                <th><strong>执行者</strong></th>
             </tr>
             </thead>
             <tbody>
-            <#--<#list pageInfo.list as user>
+            <#list pageInfo.list as data>
             <tr>
-                <td><span class="label label-success">${(user.name)!}</span></td>
-                <td><span class="label label-danger">${(user.position)!"暂无"}</span></td>
+                <td><span class="label label-success">${(data.projectName)!}</span></td>
+                <td>${(data.sketch)!}</td>
+                <td>${(data.taskLabelName)!}</td>
+                <td><#if data.status==0>未完成<#else>已完成</#if></td>
+                <td>${(data.finishTime)?date}</td>
+                <td>${data.memberName}</td>
             </tr>
-            </#list>-->
+            </#list>
             </tbody>
         </table>
         <#include "../common/layout-page.ftl">
@@ -43,8 +59,32 @@
 
 <#include "../common/footer-script.ftl">
 <script>
-    $('#fengyulou-clear').on('click',function(){
-        $('#name').val('');
+    $(function(){
+        // 添加
+        $('#fengyulou-insert').on('click', function () {
+            openPage('/fyl/task/insert')
+        })
+        // 修改
+        $('#fengyulou-update').on('click', function () {
+            if (!checkSelect("请选择数据")) {
+                return;
+            }
+            var id = $(".checkbox:checked")[0].value;
+            openPage('/fyl/task/update?id=' + id)
+        })
+        // 删除
+        $('#fengyulou-delete').on('click', function () {
+            if (!checkSelect("请选择数据")) {
+                return;
+            }
+            delFun('/fyl/task/ajax/delete', $("#dataForm").serialize(), function (data) {
+                msgFunCallBack(data.msg,function(){
+                    if (data.status == 0) {
+                        location.reload()
+                    }
+                })
+            })
+        })
     })
 </script>
 </body>

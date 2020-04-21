@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guoguo.fengyulou.dao.project.ProjectDao">
+    <insert id="insertProject">
+        insert into fengyulou_project(`name`) values (#{name})
+    </insert>
+    <update id="updateProjectById">
+        update fengyulou_project set `name`=#{name} where id=#{id}
+    </update>
+    <update id="deleteProjectByIds">
+        update fengyulou_project set `delete`=1 where id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <select id="getProjectList" resultType="com.guoguo.fengyulou.entity.project.Project">
+        select id,`name` from fengyulou_project
+        <where>
+            `delete`=0
+            <if test="name!=null and name!=''">
+                and `name` like CONCAT('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+    <select id="getProjectById" resultType="com.guoguo.fengyulou.entity.project.Project">
+        select id,`name` from fengyulou_project where id=#{id} limit 1
+    </select>
+    <select id="getProjectCountByName" resultType="java.lang.Integer">
+        select ifnull(count(1),0) from fengyulou_project where `name`=#{name}
+    </select>
+    <select id="getProjectCountByProject" resultType="java.lang.Integer">
+        select ifnull(count(1),0) from fengyulou_project where `name`=#{name} and id!=#{id}
+    </select>
+</mapper>

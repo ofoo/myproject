@@ -203,6 +203,43 @@ function ajaxFun(url, callBack) {
 }
 
 /**
+ * ajax，有参
+ * @param url
+ * @param data
+ * @param callBack
+ */
+function ajaxFunParamText(url, data, callBack) {
+    $.ajax({
+        url: url,
+        type: "post",
+        data: data,
+        dataType: "text",
+        success: callBack,
+        error: function () {
+            console.log('操作失败')
+        }
+    });
+}
+
+/**
+ * ajax，无参
+ * @param url
+ * @param data
+ * @param callBack
+ */
+function ajaxFunText(url, callBack) {
+    $.ajax({
+        url: url,
+        type: "post",
+        dataType: "text",
+        success: callBack,
+        error: function () {
+            console.log('操作失败')
+        }
+    });
+}
+
+/**
  * 提示,有回调
  * @param msg
  * @param callBack

@@ -55,6 +55,6 @@ public class MD5Util {
             "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
 
     public static void main(String[] args) {
-        System.out.println(MD5EncodeUtf8("guochao"));
+        System.out.println(MD5EncodeUtf8("123"));
     }
 }

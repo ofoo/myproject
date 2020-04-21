@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guoguo.fengyulou.dao.member.MemberDao">
+    <insert id="insertMember">
+        insert into fengyulou_member(`name`,member_label_id,mobile) values (#{name},#{memberLabelId},#{mobile})
+    </insert>
+    <update id="updateMemberById">
+        update fengyulou_member set `name`=#{name},member_label_id=#{memberLabelId},mobile=#{mobile} where id=#{id}
+    </update>
+    <update id="deleteMemberByIds">
+        update fengyulou_member set `delete`=1 where id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <select id="getMemberList" resultType="com.guoguo.fengyulou.entity.member.Member">
+        select
+        fengyulou_member.id,
+        fengyulou_member.`name`,
+        fengyulou_member.mobile,
+        fengyulou_member_label.name memberLabelName
+        from fengyulou_member
+        left join fengyulou_member_label on fengyulou_member.member_label_id=fengyulou_member_label.id
+        <where>
+            fengyulou_member.`delete`=0
+            <if test="name!=null and name!=''">
+                and fengyulou_member.`name` like CONCAT('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+    <select id="getMemberById" resultType="com.guoguo.fengyulou.entity.member.Member">
+        select id,`name`,member_label_id,mobile from fengyulou_member where id=#{id} limit 1
+    </select>
+    <select id="getMemberCountByMobile" resultType="java.lang.Integer">
+        select ifnull(count(1),0) from fengyulou_member where mobile=#{mobile}
+    </select>
+    <select id="getMemberCountByMember" resultType="java.lang.Integer">
+        select ifnull(count(1),0) from fengyulou_member where mobile=#{mobile} and id!=#{id}
+    </select>
+</mapper>
