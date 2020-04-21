@@ -11,7 +11,7 @@ import java.util.Date;
 public class Permission {
     private Long id;
     /**
-     * 名称
+     * 权限名称
      */
     private String name;
     /**
@@ -22,4 +22,12 @@ public class Permission {
      * 用户状态 0正常 2删除
      */
     private Integer status;
+    /**
+     * 页码
+     */
+    private Integer page;
+    /**
+     * 数据条数
+     */
+    private Integer limit;
 }

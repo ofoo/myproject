@@ -1,0 +1,15 @@
+shiro:
+  loginUrl: /login
+  userNativeSessionManager: true
+  sessionManager:
+    sessionIdUrlRewritingEnabled: false
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: com.guoguo.ynz.entity
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/my_ynz
+    username: root
+    password: 666666
+system:
+  name: 药品管理平台

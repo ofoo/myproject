@@ -30,4 +30,12 @@ public class User {
      * 用户状态 0正常 2删除
      */
     private Integer status;
+    /**
+     * 页码
+     */
+    private Integer page;
+    /**
+     * 数据条数
+     */
+    private Integer limit;
 }

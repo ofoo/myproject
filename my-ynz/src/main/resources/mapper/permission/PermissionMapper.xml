@@ -1,10 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.guoguo.ynz.dao.permission.PermissionDao">
-    
+    <insert id="addPermission">
+        insert into ynz_permission(name,add_time) values (#{name},now())
+    </insert>
+    <update id="deletePermissionByIds">
+        update ynz_permission set status=1 where id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item.id}
+        </foreach>
+    </update>
+    <update id="updatePermissionById">
+        update ynz_permission set name=#{name} where id=#{id}
+    </update>
+
     <select id="getPermissionList" resultType="com.guoguo.ynz.entity.permission.Permission">
-        select id,`name`,add_time
+        select id,name,add_time
         from ynz_permission
-        where status=0
+        <where>
+            status=0
+            <if test="name!=null and name!=''">and `name` like CONCAT('%',#{name},'%')</if>
+        </where>
+        limit #{page},#{limit}
+    </select>
+    <select id="getPermissionListCount" resultType="java.lang.Integer">
+        select count(1) from ynz_permission
+        <where>
+            status=0
+            <if test="name!=null and name!=''">and `name` like CONCAT('%',#{name},'%')</if>
+        </where>
+    </select>
+    <select id="getPermissionById" resultType="com.guoguo.ynz.entity.permission.Permission">
+        select
+        id,
+        name
+        from ynz_permission
+        where id=#{id}
+        limit 1
     </select>
 </mapper>
