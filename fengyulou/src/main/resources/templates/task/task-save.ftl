@@ -61,8 +61,8 @@
             <label class="col-sm-2 control-label text-danger">任务状态</label>
             <div class="col-sm-5">
                 <select class="form-control" id="status" name="status">
-                    <option value="0" <#if ((data.status)!0)==1>selected</#if>>未完成</option>
-                    <option value="1" <#if ((data.status)!0)==2>selected</#if>>已完成</option>
+                    <option value="0" <#if ((data.status)!0)==0>selected</#if>>未完成</option>
+                    <option value="1" <#if ((data.status)!0)==1>selected</#if>>已完成</option>
                 </select>
             </div>
         </div>
@@ -110,7 +110,6 @@
     })
     // 保存任务
     $("#fengyulou-save").on("click", function () {
-        debugger
         ajaxFunParam("/fyl/task/ajax/save", $("#dataForm").serialize(), function (data) {
             msgFun(data.msg)
         })

@@ -77,7 +77,7 @@ public class TaskController extends BaseController {
         request.setAttribute("pageTitle", "修改任务");
         // 查询任务
         Task task = taskService.getTaskById(id);
-        request.setAttribute("task", task);
+        request.setAttribute("data", task);
         // 查询项目列表
         List<Project> projectList = projectService.getProjectList(null);
         request.setAttribute("projectList", projectList);

@@ -11,7 +11,15 @@
         </foreach>
     </update>
     <update id="updateTaskById">
-        update fengyulou_task set project_id=#{projectId},sketch=#{sketch},task_label_id=#{taskLabelId},status=#{status},member_id=#{memberId} where id=#{id}
+        update fengyulou_task set
+        project_id=#{projectId},
+        sketch=#{sketch},
+        task_label_id=#{taskLabelId},
+        status=#{status},
+        <if test="status==0">finish_time=null,</if>
+        <if test="status==1">finish_time=now(),</if>
+        member_id=#{memberId}
+        where id=#{id}
     </update>
     <update id="updateStatusByIds">
         update fengyulou_task set `status`=1,finish_time=now() where id in
