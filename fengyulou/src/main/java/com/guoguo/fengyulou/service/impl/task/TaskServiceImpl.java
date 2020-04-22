@@ -64,4 +64,13 @@ public class TaskServiceImpl implements TaskService {
         }
         return ServerResponse.createByError();
     }
+
+    @Override
+    public ServerResponse updateStatusByIds(List<Long> ids) {
+        int rows = taskDao.updateStatusByIds(ids);
+        if (rows > 0) {
+            return ServerResponse.createBySuccess();
+        }
+        return ServerResponse.createByError();
+    }
 }

@@ -112,4 +112,13 @@ public class TaskController extends BaseController {
     private ServerResponse ajaxDelete(@RequestParam List<Long> ids) {
         return taskService.deleteTaskByIds(ids);
     }
+
+    /**
+     * 修改任务状态完成
+     */
+    @RequestMapping("/task/ajax/updateStatus")
+    @ResponseBody
+    private ServerResponse ajaxUpdateStatus(@RequestParam List<Long> ids){
+        return taskService.updateStatusByIds(ids);
+    }
 }

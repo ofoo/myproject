@@ -13,6 +13,12 @@
     <update id="updateTaskById">
         update fengyulou_task set project_id=#{projectId},sketch=#{sketch},task_label_id=#{taskLabelId},status=#{status},member_id=#{memberId} where id=#{id}
     </update>
+    <update id="updateStatusByIds">
+        update fengyulou_task set `status`=1,finish_time=now() where id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
 
     <select id="getTaskList" resultType="com.guoguo.fengyulou.entity.task.Task">
         select

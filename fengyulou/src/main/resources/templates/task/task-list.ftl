@@ -34,6 +34,7 @@
         <table class="table table-bordered table-hover">
             <thead>
             <tr>
+                <th width="2%"><input type="checkbox" class="checkall"></th>
                 <th><strong>项目名称</strong></th>
                 <th><strong>任务简述</strong></th>
                 <th><strong>任务标签</strong></th>
@@ -45,11 +46,16 @@
             <tbody>
             <#list pageInfo.list as data>
             <tr>
+                <th><input type="checkbox" name="ids" value="${data.id}" class="checkbox"></th>
                 <td><span class="label label-success">${(data.projectName)!}</span></td>
                 <td>${(data.sketch)!}</td>
                 <td>${(data.taskLabelName)!}</td>
                 <td><#if data.status==0><span class="label label-danger">未完成</span><#else><span class="label label-success">已完成</span></#if></td>
-                <td>${(data.finishTime)!}</td>
+                <td>
+                    <#if (data.finishTime)??>
+                        ${data.finishTime?date}
+                    </#if>
+                </td>
                 <td><span class="label label-primary">${data.memberName}</span></td>
             </tr>
             </#list>
@@ -72,7 +78,7 @@
                 return;
             }
             var id = $(".checkbox:checked")[0].value;
-            openPage('/fyl/task/update?id=' + id)
+            openPage('/fyl/task/update/' + id)
         })
         // 删除
         $('#fengyulou-delete').on('click', function () {
@@ -91,13 +97,13 @@
             if (!checkSelect("请选择数据")) {
                 return;
             }
-            /*delFun('/fyl/task/ajax/delete', $("#dataForm").serialize(), function (data) {
+            ajaxFunParam('/fyl/task/ajax/updateStatus', $("#dataForm").serialize(), function (data) {
                 msgFunCallBack(data.msg,function(){
                     if (data.status == 0) {
                         location.reload()
                     }
                 })
-            })*/
+            })
         })
     })
 </script>

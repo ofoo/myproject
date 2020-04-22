@@ -59,7 +59,7 @@
                 return;
             }
             var id = $(".checkbox:checked")[0].value;
-            openPage('/fyl/taskLabel/update?id=' + id)
+            openPage('/fyl/taskLabel/update/' + id)
         })
         // 删除
         $('#fengyulou-delete').on('click', function () {

@@ -15,4 +15,6 @@ public interface TaskDao {
     int updateTaskById(Task task);
 
     int insertTask(Task task);
+
+    int updateStatusByIds(List<Long> ids);
 }

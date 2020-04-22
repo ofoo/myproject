@@ -44,4 +44,11 @@ public interface TaskService {
      * @return
      */
     ServerResponse saveTask(Task task);
+
+    /**
+     * 修改任务状态完成
+     * @param ids
+     * @return
+     */
+    ServerResponse updateStatusByIds(List<Long> ids);
 }
