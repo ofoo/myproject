@@ -19,6 +19,19 @@ $(function () {
     $("#fengyulou-pwd").on("click", function () {
         updatePwd()
     })
+    // 清空列表查询条件
+    $('#fengyulou-clear').on('click',function(){
+        $(".search-from input[type='text']").val("");
+        $(".search-from select").val(-1)
+    })
+    // 日历控件
+    $('.datepicker').datepicker({
+        format: "yyyy-m-d",
+        language: "zh-CN",
+        autoclose: true,//选中之后自动隐藏日期选择框
+        clearBtn: true,//清除按钮
+        todayBtn: 'linked',//今日按钮
+    });
 })
 
 /**
@@ -250,7 +263,8 @@ function ajaxFunText(url, callBack) {
  */
 function msgFunCallBack(msg, callBack) {
     layer.msg(msg, {
-        time: 1000
+        time: 1000,
+        offset: 't',
     }, callBack)
 }
 
@@ -260,7 +274,8 @@ function msgFunCallBack(msg, callBack) {
  */
 function msgFun(msg) {
     layer.msg(msg, {
-        time: 1000
+        time: 1000,
+        offset: 't',
     })
 }
 

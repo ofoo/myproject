@@ -29,7 +29,7 @@
 <script>
     // 保存数据
     $("#fengyulou-save").on("click", function () {
-        ajaxFunParam("/admin/project/ajax/save", $("#dataForm").serialize(), function (data) {
+        ajaxFunParam("/fyl/project/ajax/save", $("#dataForm").serialize(), function (data) {
             msgFun(data.msg)
         })
     })

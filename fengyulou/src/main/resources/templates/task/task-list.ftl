@@ -9,18 +9,38 @@
     <#include "../common/layout-left.ftl">
     <div class="admin-right">
         <#include "../common/layout-navtitle.ftl">
-        <form class="search-from">
+        <form class="search-from" method="post" action="/fyl/task/list/page">
             <input type="hidden" name="pageNum" id="pageNum">
-            <div class="row">
-                <div class="col-md-3">
-                    <input name="name" id="name" type="text" class="form-control" value="<#--${(user.name)!}-->" placeholder="项目名称">
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <input name="projectName" id="projectName" type="text" class="form-control" value="${(data.projectName)!}" placeholder="项目名称">
                 </div>
-                <div class="col-md-3">
-                    <input name="name" id="name" type="text" class="form-control" value="<#--${(user.name)!}-->" placeholder="任务简介">
+                <div class="col-md-2">
+                    <input name="memberName" id="memberName" type="text" class="form-control" value="${(data.memberName)!}" placeholder="执行人">
+                </div>
+                <div class="col-md-2">
+                    <input name="taskLabelName" id="taskLabelName" type="text" class="form-control" value="${(data.taskLabelName)!}" placeholder="任务标签">
+                </div>
+                <div class="col-md-2">
+                    <select name="status" id="status" class="form-control">
+                        <option value="-1">任务状态</option>
+                        <option value="0" <#if ((data.status)!-2)==0>selected</#if>>未完成</option>
+                        <option value="1" <#if ((data.status)!-2)==1>selected</#if>>已完成</option>
+                    </select>
                 </div>
                 <div class="col-md-2">
                     <button type="button" class="btn btn-info" data-page="1" id="fengyulou-search">查询</button>
-                    <button type="reset" class="btn btn-warning">清空</button>
+                    <button type="button" class="btn btn-warning" id="fengyulou-clear">清空</button>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <input name="finishTime" id="finishTime" type="text" class="form-control datepicker" value="<#if (data.finishTime)??>${data.finishTime?date}</#if>" placeholder="完成时间" readonly>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-8">
+                    <input name="sketch" id="sketch" type="text" class="form-control" value="${(data.sketch)!}" placeholder="任务简述">
                 </div>
             </div>
         </form>
@@ -40,13 +60,13 @@
                 <th><strong>任务标签</strong></th>
                 <th><strong>任务状态</strong></th>
                 <th><strong>完成时间</strong></th>
-                <th><strong>执行者</strong></th>
+                <th><strong>执行人</strong></th>
             </tr>
             </thead>
             <tbody>
             <#list pageInfo.list as data>
             <tr>
-                <th><input type="checkbox" name="ids" value="${data.id}" class="checkbox"></th>
+                <td><input type="checkbox" name="ids" value="${data.id}" class="checkbox"></td>
                 <td><span class="label label-success">${(data.projectName)!}</span></td>
                 <td>${(data.sketch)!}</td>
                 <td>${(data.taskLabelName)!}</td>

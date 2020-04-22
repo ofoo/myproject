@@ -4,6 +4,7 @@ import com.guoguo.common.ServerResponse;
 import com.guoguo.fengyulou.controller.BaseController;
 import com.guoguo.fengyulou.entity.task.label.TaskLabel;
 import com.guoguo.fengyulou.service.task.label.TaskLabelService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +20,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/fyl")
-public class TaskLableController extends BaseController {
+public class TaskLabelController extends BaseController {
 
     @Autowired
     private TaskLabelService taskLabelService;
@@ -34,7 +35,7 @@ public class TaskLableController extends BaseController {
     @RequestMapping("/taskLabel/list/page")
     public String list(HttpServletRequest request, TaskLabel taskLabel) {
         request.setAttribute("pageInfo", taskLabelService.getTaskLabelListPage(taskLabel));
-        request.setAttribute("taskLabel", taskLabel);
+        request.setAttribute("data", taskLabel);
         return "task/label/task-label-list";
     }
 
@@ -74,6 +75,9 @@ public class TaskLableController extends BaseController {
     @RequestMapping("/taskLabel/ajax/save")
     @ResponseBody
     public ServerResponse ajaxSave(TaskLabel taskLabel) {
+        if (StringUtils.isBlank(taskLabel.getName())) {
+            return ServerResponse.createByErrorMessage("请输入任务标签名称");
+        }
         return taskLabelService.saveTaskLabel(taskLabel);
     }
 

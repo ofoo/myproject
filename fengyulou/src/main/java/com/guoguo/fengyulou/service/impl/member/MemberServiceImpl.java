@@ -10,6 +10,7 @@ import com.guoguo.fengyulou.entity.project.Project;
 import com.guoguo.fengyulou.service.member.MemberService;
 import com.guoguo.util.ObjectUtils;
 import com.sun.deploy.model.Resource;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,26 +46,30 @@ public class MemberServiceImpl implements MemberService {
         member.setName(member.getName().trim());
         member.setMobile(member.getMobile().trim());
         if (ObjectUtils.isNotNull(member.getId())) {
-            // 验证数据是否重复
-            int count = memberDao.getMemberCountByMember(member);
-            if (count > 0) {
-                return ServerResponse.createByError(ResponseCode.EXIST);
+            if (StringUtils.isNotBlank(member.getMobile())) {
+                // 验证数据是否重复
+                int count = memberDao.getMemberCountByMember(member);
+                if (count > 0) {
+                    return ServerResponse.createByError(ResponseCode.EXIST);
+                }
             }
             // 修改
             int rows = memberDao.updateMemberById(member);
             if (rows > 0) {
-                ServerResponse.createBySuccess();
+                return ServerResponse.createBySuccess();
             }
         } else {
-            // 验证数据是否重复
-            int count = memberDao.getMemberCountByMobile(member.getMobile());
-            if (count > 0) {
-                return ServerResponse.createByError(ResponseCode.EXIST);
+            if (StringUtils.isNotBlank(member.getMobile())) {
+                // 验证数据是否重复
+                int count = memberDao.getMemberCountByMobile(member.getMobile());
+                if (count > 0) {
+                    return ServerResponse.createByError(ResponseCode.EXIST);
+                }
             }
             // 添加
             int rows = memberDao.insertMember(member);
             if (rows > 0) {
-                ServerResponse.createBySuccess();
+                return ServerResponse.createBySuccess();
             }
         }
         return ServerResponse.createByError();

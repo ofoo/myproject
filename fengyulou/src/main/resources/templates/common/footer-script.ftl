@@ -5,4 +5,6 @@
 <script src="/layer/layer.js"></script>
 <script type="text/javascript" src="/bootstrap/js/webuploader.js"></script>
 <script src="/iCheck/js/icheck.js"></script>
+<script src="/datepicker/js/bootstrap-datepicker.js"></script>
+<script src="/datepicker/locales/bootstrap-datepicker.zh-CN.min.js" charset="UTF-8"></script>
 <script src="/bootstrap/js/webutils.js"></script>

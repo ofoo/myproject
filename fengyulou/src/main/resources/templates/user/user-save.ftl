@@ -56,14 +56,14 @@
 <script>
     // 保存任务
     $("#fengyulou-save").on("click",function () {
-        ajaxFunParam("/admin/task/ajax/save",$("#dataForm").serialize(),function(data){
+        ajaxFunParam("/fyl/task/ajax/save",$("#dataForm").serialize(),function(data){
             msgFun(data.msg)
         })
     })
 
     // 选择用户页面
     $(".fengyulou-select").on("click",function(){
-        openPage('/admin/user/list/select');
+        openPage('/fyl/user/list/select');
     })
 
     // 设置用户信息

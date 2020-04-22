@@ -9,7 +9,7 @@
     <form class="form-horizontal data-form" id="dataForm">
         <input type="hidden" name="id" value="${(data.id)!}">
         <div class="form-group">
-            <label class="col-md-2 control-label text-danger">任务标签名称</label>
+            <label class="col-md-2 control-label text-danger">人员标签名称</label>
             <div class="col-md-5">
                 <input name="name" type="text" class="form-control" id="name" value="${(data.name)!}"
                        placeholder="请输入任务标签名称">
@@ -29,7 +29,7 @@
 <script>
     // 保存任务
     $("#fengyulou-save").on("click", function () {
-        ajaxFunParam("/admin/memberLabel/ajax/save", $("#dataForm").serialize(), function (data) {
+        ajaxFunParam("/fyl/memberLabel/ajax/save", $("#dataForm").serialize(), function (data) {
             msgFun(data.msg)
         })
     })

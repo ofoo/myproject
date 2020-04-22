@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">人员标签</label>
+            <label class="col-sm-2 control-label text-danger">人员标签</label>
             <div class="col-sm-3">
                 <select class="form-control" id="memberLabelId" name="memberLabelId">
                 <#list memberLabelList as item>
@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="mobile" class="col-md-2 control-label text-danger">人员手机号</label>
+            <label for="mobile" class="col-md-2 control-label">人员手机号</label>
             <div class="col-md-5">
                 <input name="mobile" type="text" class="form-control" id="mobile" value="${(data.type)!}"
                        placeholder="请输入人员手机号">

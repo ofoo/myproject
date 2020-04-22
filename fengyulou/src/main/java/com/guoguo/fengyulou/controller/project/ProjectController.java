@@ -3,6 +3,7 @@ package com.guoguo.fengyulou.controller.project;
 import com.guoguo.common.ServerResponse;
 import com.guoguo.fengyulou.entity.project.Project;
 import com.guoguo.fengyulou.service.project.ProjectService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -71,6 +72,9 @@ public class ProjectController {
     @RequestMapping("/project/ajax/save")
     @ResponseBody
     public ServerResponse ajaxSave(Project project) {
+        if (StringUtils.isBlank(project.getName())) {
+            return ServerResponse.createByErrorMessage("请输入项目名称");
+        }
         return projectService.saveProject(project);
     }
 

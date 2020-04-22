@@ -27,6 +27,12 @@
             <if test="name!=null and name!=''">
                 and fengyulou_member.`name` like CONCAT('%',#{name},'%')
             </if>
+            <if test="memberLabelName!=null and memberLabelName!=''">
+                and fengyulou_member_label.`name` like CONCAT('%',#{memberLabelName},'%')
+            </if>
+            <if test="mobile!=null and mobile!=''">
+                and fengyulou_member.`mobile` like CONCAT('%',#{mobile},'%')
+            </if>
         </where>
         order by fengyulou_member.id desc
     </select>

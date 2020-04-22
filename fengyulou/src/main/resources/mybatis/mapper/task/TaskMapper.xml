@@ -49,7 +49,7 @@
             <if test="sketch!=null and sketch!=''">
                 and fengyulou_task.sketch like CONCAT('%',#{sketch},'%')
             </if>
-            <if test="status!=null">
+            <if test="status!=null and status>-1">
                 and fengyulou_task.status=#{status}
             </if>
             <if test="taskLabelName!=null and taskLabelName!=null">
@@ -59,7 +59,7 @@
                 and fengyulou_member.name like CONCAT('%',#{memberName},'%')
             </if>
             <if test="finishTime!=null">
-                and fengyulou_member.finish_time=#{finishTime}
+                and fengyulou_task.finish_time=#{finishTime}
             </if>
         </where>
         order by fengyulou_task.id desc

@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">项目名称</label>
+            <label class="col-sm-2 control-label text-danger">项目名称</label>
             <div class="col-sm-3">
                 <select class="form-control" id="projectId" name="projectId">
                     <#list projectList as item>
@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">任务标签</label>
+            <label class="col-sm-2 control-label text-danger">任务标签</label>
             <div class="col-sm-3">
                 <select class="form-control" id="taskLabelId" name="taskLabelId">
                 <#list taskLabelList as item>
@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">执行人</label>
+            <label class="col-sm-2 control-label text-danger">执行人</label>
             <div class="col-sm-3">
                 <select class="form-control" id="memberId" name="memberId">
                 <#list memberList as item>

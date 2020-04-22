@@ -9,6 +9,8 @@ import com.guoguo.fengyulou.service.member.MemberService;
 import com.guoguo.fengyulou.service.project.ProjectService;
 import com.guoguo.fengyulou.service.task.TaskService;
 import com.guoguo.fengyulou.service.task.label.TaskLabelService;
+import com.guoguo.util.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,7 +45,7 @@ public class TaskController extends BaseController {
     @RequestMapping("/task/list/page")
     public String list(HttpServletRequest request, Task task) {
         request.setAttribute("pageInfo", taskService.getTaskListPage(task));
-        request.setAttribute("task", task);
+        request.setAttribute("data", task);
         return "task/task-list";
     }
 
@@ -98,6 +100,21 @@ public class TaskController extends BaseController {
     @RequestMapping("/task/ajax/save")
     @ResponseBody
     private ServerResponse ajaxSave(Task task) {
+        if (StringUtils.isBlank(task.getSketch())) {
+            return ServerResponse.createByErrorMessage("请输入任务简述");
+        }
+        if (ObjectUtils.isNull(task.getProjectId())) {
+            return ServerResponse.createByErrorMessage("请选择项目名称");
+        }
+        if (ObjectUtils.isNull(task.getTaskLabelId())) {
+            return ServerResponse.createByErrorMessage("请选择任务标签");
+        }
+        if (ObjectUtils.isNull(task.getMemberId())) {
+            return ServerResponse.createByErrorMessage("请选择执行人");
+        }
+        if (ObjectUtils.isNull(task.getStatus())) {
+            return ServerResponse.createByErrorMessage("请选择任务状态");
+        }
         return taskService.saveTask(task);
     }
 

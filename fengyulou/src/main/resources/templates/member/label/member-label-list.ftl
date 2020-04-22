@@ -9,7 +9,7 @@
     <#include "../../common/layout-left.ftl">
     <div class="admin-right">
         <#include "../../common/layout-navtitle.ftl">
-        <form class="search-from">
+        <form class="search-from" method="post" action="/fyl/memberLabel/list/page">
             <input type="hidden" name="pageNum" id="pageNum">
             <div class="row">
                 <div class="col-md-3">
@@ -18,7 +18,7 @@
                 </div>
                 <div class="col-md-2">
                     <button type="button" class="btn btn-info" data-page="1" id="fengyulou-search">查询</button>
-                    <button type="reset" class="btn btn-warning">清空</button>
+                    <button type="button" class="btn btn-warning" id="fengyulou-clear">清空</button>
                 </div>
             </div>
         </form>
@@ -31,12 +31,14 @@
         <table class="table table-bordered table-hover">
             <thead>
             <tr>
+                <th width="2%"><input type="checkbox" class="checkall"></th>
                 <th><strong>人员标签名称</strong></th>
             </tr>
             </thead>
             <tbody>
             <#list pageInfo.list as data>
             <tr>
+                <td><input type="checkbox" name="ids" value="${data.id}" class="checkbox"></td>
                 <td>${(data.name)!}</td>
             </tr>
             </#list>

@@ -3,10 +3,13 @@ package com.guoguo.fengyulou.controller.member.label;
 import com.guoguo.common.ServerResponse;
 import com.guoguo.fengyulou.entity.member.label.MemberLabel;
 import com.guoguo.fengyulou.service.member.label.MemberLabelService;
+import com.guoguo.util.ObjectUtils;
+import com.guoguo.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,7 +48,7 @@ public class MemberLabelController {
     @RequestMapping("/memberLabel/insert")
     public String insert(HttpServletRequest request) {
         request.setAttribute("pageTitle", "添加人员标签");
-        return "memberLabel/memberLabel-save";
+        return "member/label/member-label-save";
     }
 
     /**
@@ -60,7 +63,7 @@ public class MemberLabelController {
         request.setAttribute("pageTitle", "修改人员标签");
         // 查询人员标签
         request.setAttribute("data", memberLabelService.getMemberLabelById(id));
-        return "memberLabel/memberLabel-save";
+        return "member/label/member-label-save";
     }
 
     /**
@@ -72,6 +75,9 @@ public class MemberLabelController {
     @RequestMapping("/memberLabel/ajax/save")
     @ResponseBody
     public ServerResponse ajaxSave(MemberLabel memberLabel) {
+        if (StringUtils.isBlank(memberLabel.getName())) {
+            return ServerResponse.createByErrorMessage("请输入人员标签名称");
+        }
         return memberLabelService.saveMemberLabel(memberLabel);
     }
 
@@ -83,7 +89,7 @@ public class MemberLabelController {
      */
     @RequestMapping("/memberLabel/ajax/delete")
     @ResponseBody
-    public ServerResponse ajaxDelete(List<Long> ids) {
+    public ServerResponse ajaxDelete(@RequestParam List<Long> ids) {
         return memberLabelService.deleteMemberLabelByIds(ids);
     }
 

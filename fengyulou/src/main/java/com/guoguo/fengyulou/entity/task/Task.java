@@ -1,6 +1,7 @@
 package com.guoguo.fengyulou.entity.task;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -29,6 +30,7 @@ public class Task {
     /**
      * 完成时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date finishTime;
     /**
      * 人员id

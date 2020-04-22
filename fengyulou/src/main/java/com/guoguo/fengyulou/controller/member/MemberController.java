@@ -4,10 +4,13 @@ import com.guoguo.common.ServerResponse;
 import com.guoguo.fengyulou.entity.member.Member;
 import com.guoguo.fengyulou.service.member.MemberService;
 import com.guoguo.fengyulou.service.member.label.MemberLabelService;
+import com.guoguo.util.ObjectUtils;
+import com.guoguo.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +35,7 @@ public class MemberController {
      */
     @RequestMapping("/member/list/page")
     public String list(HttpServletRequest request, Member member) {
-        request.setAttribute("member", member);
+        request.setAttribute("data", member);
         request.setAttribute("pageInfo", memberService.getMemberListPage(member));
         return "/member/member-list";
     }
@@ -77,6 +80,12 @@ public class MemberController {
     @RequestMapping("/member/ajax/save")
     @ResponseBody
     public ServerResponse ajaxSave(Member member) {
+        if (StringUtils.isBlank(member.getName())) {
+            return ServerResponse.createByErrorMessage("请输入人员名称");
+        }
+        if (ObjectUtils.isNull(member.getMemberLabelId())) {
+            return ServerResponse.createByErrorMessage("请选择人员标签");
+        }
         return memberService.saveMember(member);
     }
 
@@ -88,7 +97,7 @@ public class MemberController {
      */
     @RequestMapping("/member/ajax/delete")
     @ResponseBody
-    public ServerResponse ajaxDelete(List<Long> ids) {
+    public ServerResponse ajaxDelete(@RequestParam List<Long> ids) {
         return memberService.deleteMemberByIds(ids);
     }
 
