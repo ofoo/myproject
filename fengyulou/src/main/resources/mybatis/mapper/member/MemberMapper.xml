@@ -28,6 +28,7 @@
                 and fengyulou_member.`name` like CONCAT('%',#{name},'%')
             </if>
         </where>
+        order by fengyulou_member.id desc
     </select>
     <select id="getMemberById" resultType="com.guoguo.fengyulou.entity.member.Member">
         select id,`name`,member_label_id,mobile from fengyulou_member where id=#{id} limit 1

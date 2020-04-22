@@ -48,9 +48,22 @@
 
 <#include "../common/footer-script.ftl">
 <script>
+    // 添加人员标签
+    $("#memberLabel-insert").on("click", function () {
+        layer.prompt({title: '添加人员标签'}, function (pass, index) {
+            ajaxFunParam("/fyl/memberLabel/ajax/save", {'name': pass}, function (data) {
+                if (data.status == 0) {
+                    ajaxFunText("/fyl/memberLabel/ajax/list", function (data) {
+                        $("#memberLabelId").html(data);
+                    })
+                    layer.close(index);
+                }
+            })
+        });
+    })
     // 保存任务
     $("#fengyulou-save").on("click", function () {
-        ajaxFunParam("/admin/member/ajax/save", $("#dataForm").serialize(), function (data) {
+        ajaxFunParam("/fyl/member/ajax/save", $("#dataForm").serialize(), function (data) {
             msgFun(data.msg)
         })
     })

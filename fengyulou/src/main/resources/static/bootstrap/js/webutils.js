@@ -105,7 +105,7 @@ function openPageClose(url) {
         shadeClose: true,
         content: url,
         btn: ['关闭'], //可以无限个按钮
-        yes:function(){
+        yes: function () {
             layer.closeAll()
         }
     })
@@ -117,8 +117,12 @@ function openPageClose(url) {
 function updatePwd() {
     layer.prompt({title: "修改密码", formType: 1, maxlength: 255}, function (pass, index) {
         layer.close(index);
-        ajaxFunParam("/admin/user/ajax/update/pwd", {"pwd": pass}, function (data) {
-            msgFun(data.msg);
+        ajaxFunParam("/fyl/user/ajaxUpdatePwd", {"pwd": pass}, function (data) {
+            msgFunCallBack(data.msg, function () {
+                if (data.status == 0) {
+                    location.href = "/"
+                }
+            });
         })
     });
 }
@@ -129,8 +133,8 @@ function updatePwd() {
  * @param url
  * @param callBack
  */
-function openPrompt(title,callBack){
-    layer.prompt({title:title,maxlength:255},function(pass,index){
+function openPrompt(title, callBack) {
+    layer.prompt({title: title, maxlength: 255}, function (pass, index) {
         layer.close(index)
         callBack(pass);
     })
@@ -142,8 +146,8 @@ function openPrompt(title,callBack){
  * @param url
  * @param callBack
  */
-function openPromptValue(title,value,callBack){
-    layer.prompt({title:title,maxlength:255,value:value},function(pass,index){
+function openPromptValue(title, value, callBack) {
+    layer.prompt({title: title, maxlength: 255, value: value}, function (pass, index) {
         layer.close(index)
         callBack(pass);
     })
@@ -264,7 +268,7 @@ function msgFun(msg) {
  * 检查是否选择数据
  * @param msg
  */
-function checkSelect(msg){
+function checkSelect(msg) {
     var length = $(".checkbox:checked").length;
     if (length == 0) {
         msgFun(msg);

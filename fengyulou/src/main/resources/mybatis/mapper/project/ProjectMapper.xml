@@ -22,6 +22,7 @@
                 and `name` like CONCAT('%',#{name},'%')
             </if>
         </where>
+        order by id desc
     </select>
     <select id="getProjectById" resultType="com.guoguo.fengyulou.entity.project.Project">
         select id,`name` from fengyulou_project where id=#{id} limit 1

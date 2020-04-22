@@ -7,6 +7,7 @@ import com.guoguo.fengyulou.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
@@ -39,9 +40,26 @@ public class UserController extends BaseController {
      * @param session
      * @return
      */
-    @RequestMapping("/logout")
+    @RequestMapping("/user/logout")
     public String logout(HttpSession session) {
         session.removeAttribute("loginUser");
-        return "redirect:/login";
+        return "redirect:/";
+    }
+
+    /**
+     * 修改用户密码
+     *
+     * @param session
+     * @param pwd
+     * @return
+     */
+    @RequestMapping("/user/ajaxUpdatePwd")
+    @ResponseBody
+    public ServerResponse ajaxUpdatePwd(HttpSession session, @RequestParam String pwd) {
+        ServerResponse serverResponse = userService.updatePasswordById(session, pwd);
+        if (serverResponse.isSuccess()) {
+            session.removeAttribute("loginUser");
+        }
+        return serverResponse;
     }
 }

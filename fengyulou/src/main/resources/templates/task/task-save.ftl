@@ -46,7 +46,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">执行人</label>
             <div class="col-sm-3">
-                <select class="form-control" id="taskLabelId" name="taskLabelId">
+                <select class="form-control" id="memberId" name="memberId">
                 <#list memberList as item>
                     <option value="${item.id}"
                                 <#if ((data.taskLabelId)!0)==item.id>selected</#if>>${item.name}</option>
@@ -97,7 +97,7 @@
             ajaxFunParam("/fyl/taskLabel/ajax/save", {'name': pass}, function (data) {
                 if (data.status == 0) {
                     ajaxFunText("/fyl/taskLabel/ajax/list", function (data) {
-                        $("#projectId").html(data);
+                        $("#taskLabelId").html(data);
                     })
                     layer.close(index);
                 }
@@ -110,7 +110,8 @@
     })
     // 保存任务
     $("#fengyulou-save").on("click", function () {
-        ajaxFunParam("/admin/task/ajax/save", $("#dataForm").serialize(), function (data) {
+        debugger
+        ajaxFunParam("/fyl/task/ajax/save", $("#dataForm").serialize(), function (data) {
             msgFun(data.msg)
         })
     })

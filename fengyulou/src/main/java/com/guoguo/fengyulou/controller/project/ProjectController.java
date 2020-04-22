@@ -85,4 +85,16 @@ public class ProjectController {
     public ServerResponse ajaxSave(@RequestParam List<Long> ids) {
         return projectService.deleteProjectByIds(ids);
     }
+
+    /**
+     * 下拉选列表
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping("/project/ajax/list")
+    public String ajaxList(HttpServletRequest request) {
+        request.setAttribute("list", projectService.getProjectList(null));
+        return "common/select-item";
+    }
 }

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.guoguo.fengyulou.dao.user.UserDao">
+    <update id="updatePasswordById">
+        update fengyulou_user set password=#{password} where id=#{id}
+    </update>
 
     <select id="getUserByLoginName" resultType="com.guoguo.fengyulou.entity.user.User">
         select id,login_name,password,`name` from fengyulou_user where login_name=#{loginName}

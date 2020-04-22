@@ -22,6 +22,7 @@
                 and `name` like CONCAT('%',#{name},'%')
             </if>
         </where>
+        order by id desc
     </select>
     <select id="getTaskLabelById" resultType="com.guoguo.fengyulou.entity.task.label.TaskLabel">
         select id,`name` from fengyulou_task_label where id=#{id} limit 1

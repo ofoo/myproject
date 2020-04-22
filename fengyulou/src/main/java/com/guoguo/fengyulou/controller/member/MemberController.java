@@ -47,7 +47,7 @@ public class MemberController {
     public String insert(HttpServletRequest request) {
         request.setAttribute("pageTitle", "添加人员");
         // 查询人员标签列表
-        request.setAttribute("memberLabelList",memberLabelService.getMemberLabelList(null));
+        request.setAttribute("memberLabelList", memberLabelService.getMemberLabelList(null));
         return "member/member-save";
     }
 
@@ -64,7 +64,7 @@ public class MemberController {
         // 查询人员
         request.setAttribute("data", memberService.getMemberById(id));
         // 查询人员标签列表
-        request.setAttribute("memberLabelList",memberLabelService.getMemberLabelList(null));
+        request.setAttribute("memberLabelList", memberLabelService.getMemberLabelList(null));
         return "member/member-save";
     }
 
@@ -90,5 +90,17 @@ public class MemberController {
     @ResponseBody
     public ServerResponse ajaxDelete(List<Long> ids) {
         return memberService.deleteMemberByIds(ids);
+    }
+
+    /**
+     * 下拉选列表
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping("/member/ajax/list")
+    public String ajaxList(HttpServletRequest request) {
+        request.setAttribute("list", memberService.getMemberList(null));
+        return "common/select-item";
     }
 }

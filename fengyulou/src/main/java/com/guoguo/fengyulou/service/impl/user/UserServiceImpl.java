@@ -29,4 +29,15 @@ public class UserServiceImpl implements UserService {
         }
         return ServerResponse.createByErrorMessage("账号或密码错误");
     }
+
+    @Override
+    public ServerResponse updatePasswordById(HttpSession session, String password) {
+        User user = (User) session.getAttribute("loginUser");
+        user.setPassword(MD5Util.MD5EncodeUtf8(password));
+        int rows = userDao.updatePasswordById(user);
+        if (rows > 0) {
+            return ServerResponse.createBySuccessMessage("修改成功");
+        }
+        return ServerResponse.createByErrorMessage("修改失败");
+    }
 }

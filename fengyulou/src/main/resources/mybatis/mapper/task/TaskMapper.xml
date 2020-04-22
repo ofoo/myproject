@@ -28,7 +28,7 @@
         left join fengyulou_task_label on fengyulou_task.task_label_id=fengyulou_task_label.id
         left join fengyulou_member on fengyulou_task.member_id=fengyulou_member.id
         <where>
-            fengyulou_task.delete=0
+            fengyulou_task.`delete`=0
             <if test="projectName!=null and projectName!=''">
                 and fengyulou_project.name like CONCAT('%',#{projectName},'%')
             </if>
@@ -48,6 +48,7 @@
                 and fengyulou_member.finish_time=#{finishTime}
             </if>
         </where>
+        order by fengyulou_task.id desc
     </select>
     <select id="getTaskById" resultType="com.guoguo.fengyulou.entity.task.Task">
         select

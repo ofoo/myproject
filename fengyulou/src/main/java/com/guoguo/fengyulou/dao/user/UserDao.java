@@ -5,4 +5,6 @@ import org.apache.ibatis.annotations.Param;
 
 public interface UserDao {
     User getUserByLoginName(@Param("loginName") String loginName);
+
+    int updatePasswordById(User user);
 }

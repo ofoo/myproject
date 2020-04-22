@@ -31,8 +31,8 @@ public class MemberLabelController {
      */
     @RequestMapping("/memberLabel/list/page")
     public String list(HttpServletRequest request, MemberLabel memberLabel) {
-        request.setAttribute("data",memberLabel);
-        request.setAttribute("pageInfo",memberLabelService.getMemberLabelListPage(memberLabel));
+        request.setAttribute("data", memberLabel);
+        request.setAttribute("pageInfo", memberLabelService.getMemberLabelListPage(memberLabel));
         return "/member/label/member-label-list";
     }
 
@@ -59,29 +59,43 @@ public class MemberLabelController {
     public String update(HttpServletRequest request, @PathVariable Long id) {
         request.setAttribute("pageTitle", "修改人员标签");
         // 查询人员标签
-        request.setAttribute("data",memberLabelService.getMemberLabelById(id));
+        request.setAttribute("data", memberLabelService.getMemberLabelById(id));
         return "memberLabel/memberLabel-save";
     }
 
     /**
      * 保存数据
+     *
      * @param memberLabel
      * @return
      */
     @RequestMapping("/memberLabel/ajax/save")
     @ResponseBody
-    public ServerResponse ajaxSave(MemberLabel memberLabel){
+    public ServerResponse ajaxSave(MemberLabel memberLabel) {
         return memberLabelService.saveMemberLabel(memberLabel);
     }
 
     /**
      * 按id删除数据
+     *
      * @param ids
      * @return
      */
     @RequestMapping("/memberLabel/ajax/delete")
     @ResponseBody
-    public ServerResponse ajaxDelete(List<Long> ids){
+    public ServerResponse ajaxDelete(List<Long> ids) {
         return memberLabelService.deleteMemberLabelByIds(ids);
+    }
+
+    /**
+     * 下拉选列表
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping("/memberLabel/ajax/list")
+    public String ajaxList(HttpServletRequest request) {
+        request.setAttribute("list", memberLabelService.getMemberLabelList(null));
+        return "common/select-item";
     }
 }

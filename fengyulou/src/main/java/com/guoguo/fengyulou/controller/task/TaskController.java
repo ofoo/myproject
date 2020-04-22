@@ -1,6 +1,5 @@
 package com.guoguo.fengyulou.controller.task;
 
-import com.github.pagehelper.PageInfo;
 import com.guoguo.common.ServerResponse;
 import com.guoguo.fengyulou.controller.BaseController;
 import com.guoguo.fengyulou.entity.project.Project;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -96,6 +96,7 @@ public class TaskController extends BaseController {
      * @return
      */
     @RequestMapping("/task/ajax/save")
+    @ResponseBody
     private ServerResponse ajaxSave(Task task) {
         return taskService.saveTask(task);
     }
@@ -107,6 +108,7 @@ public class TaskController extends BaseController {
      * @return
      */
     @RequestMapping("/task/ajax/delete")
+    @ResponseBody
     private ServerResponse ajaxDelete(@RequestParam List<Long> ids) {
         return taskService.deleteTaskByIds(ids);
     }

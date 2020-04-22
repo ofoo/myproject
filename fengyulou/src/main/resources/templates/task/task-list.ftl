@@ -28,6 +28,7 @@
             <button type="button" class="btn btn-success" id="fengyulou-insert">添加</button>
             <button type="button" class="btn btn-primary" id="fengyulou-update">修改</button>
             <button type="button" class="btn btn-danger" id="fengyulou-delete">删除</button>
+            <button type="button" class="btn btn-success" id="fengyulou-finish">完成</button>
         </div>
         <form id="dataForm"></form>
         <table class="table table-bordered table-hover">
@@ -37,6 +38,7 @@
                 <th><strong>任务简述</strong></th>
                 <th><strong>任务标签</strong></th>
                 <th><strong>任务状态</strong></th>
+                <th><strong>完成时间</strong></th>
                 <th><strong>执行者</strong></th>
             </tr>
             </thead>
@@ -46,9 +48,9 @@
                 <td><span class="label label-success">${(data.projectName)!}</span></td>
                 <td>${(data.sketch)!}</td>
                 <td>${(data.taskLabelName)!}</td>
-                <td><#if data.status==0>未完成<#else>已完成</#if></td>
-                <td>${(data.finishTime)?date}</td>
-                <td>${data.memberName}</td>
+                <td><#if data.status==0><span class="label label-danger">未完成</span><#else><span class="label label-success">已完成</span></#if></td>
+                <td>${(data.finishTime)!}</td>
+                <td><span class="label label-primary">${data.memberName}</span></td>
             </tr>
             </#list>
             </tbody>
@@ -84,6 +86,18 @@
                     }
                 })
             })
+        })
+        $('#fengyulou-finish').on('click', function () {
+            if (!checkSelect("请选择数据")) {
+                return;
+            }
+            /*delFun('/fyl/task/ajax/delete', $("#dataForm").serialize(), function (data) {
+                msgFunCallBack(data.msg,function(){
+                    if (data.status == 0) {
+                        location.reload()
+                    }
+                })
+            })*/
         })
     })
 </script>

@@ -89,4 +89,15 @@ public class TaskLableController extends BaseController {
         return taskLabelService.deleteTaskLabelByIds(ids);
     }
 
+    /**
+     * 下拉选子项
+     *
+     * @return
+     */
+    @RequestMapping("/taskLabel/ajax/list")
+    public String ajaxList(HttpServletRequest request) {
+        request.setAttribute("list", taskLabelService.getTaskLabelList(null));
+        return "/common/select-item";
+    }
 }
+
