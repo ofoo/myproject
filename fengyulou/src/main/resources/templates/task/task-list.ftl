@@ -29,17 +29,15 @@
                     </select>
                 </div>
                 <div class="col-md-2">
+                    <input name="finishTime" id="finishTime" type="text" class="form-control datepicker" value="<#if (data.finishTime)??>${data.finishTime?date}</#if>" placeholder="完成时间" readonly>
+                </div>
+                <div class="col-md-2">
                     <button type="button" class="btn btn-info" data-page="1" id="fengyulou-search">查询</button>
                     <button type="button" class="btn btn-warning" id="fengyulou-clear">清空</button>
                 </div>
             </div>
             <div class="row form-group">
-                <div class="col-md-2">
-                    <input name="finishTime" id="finishTime" type="text" class="form-control datepicker" value="<#if (data.finishTime)??>${data.finishTime?date}</#if>" placeholder="完成时间" readonly>
-                </div>
-            </div>
-            <div class="row form-group">
-                <div class="col-md-8">
+                <div class="col-md-10">
                     <input name="sketch" id="sketch" type="text" class="form-control" value="${(data.sketch)!}" placeholder="任务简述">
                 </div>
             </div>

@@ -11,7 +11,7 @@
     <groupId>com.guoguo</groupId>
     <artifactId>fengyulou</artifactId>
     <version>1.0</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <name>fengyulou</name>
     <description>任务管理系统</description>
 
