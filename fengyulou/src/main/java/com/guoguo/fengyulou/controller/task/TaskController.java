@@ -112,7 +112,7 @@ public class TaskController extends BaseController {
         if (ObjectUtils.isNull(task.getMemberId())) {
             return ServerResponse.createByErrorMessage("请选择执行人");
         }
-        if (ObjectUtils.isNull(task.getStatus())) {
+        if (task.getStatus() == null || (task.getStatus() < 0 && task.getStatus() > 1)) {
             return ServerResponse.createByErrorMessage("请选择任务状态");
         }
         return taskService.saveTask(task);
@@ -135,7 +135,7 @@ public class TaskController extends BaseController {
      */
     @RequestMapping("/task/ajax/updateStatus")
     @ResponseBody
-    private ServerResponse ajaxUpdateStatus(@RequestParam List<Long> ids){
+    private ServerResponse ajaxUpdateStatus(@RequestParam List<Long> ids) {
         return taskService.updateStatusByIds(ids);
     }
 }
