@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <#assign title="任务管理">
+    <#assign title="任务列表">
     <#include "../common/header-script.ftl">
 </head>
 <body>

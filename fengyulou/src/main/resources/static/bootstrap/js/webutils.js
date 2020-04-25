@@ -4,7 +4,10 @@ $(function () {
         $(this).find("span i").toggleClass('action').parents().siblings().find("span i").removeClass('action');
     })
     // 左侧导航选中
-    $("[href='" + location.pathname + "']").addClass('active');
+    $("[href='" + location.pathname + "']").parent().parent().show();
+    $("[href='" + location.pathname + "']").parent().parent().parent().find("span i").addClass('action');
+    $("[href='" + location.pathname + "']").parent().parent().parent().addClass("text-primary");
+    $("[href='" + location.pathname + "']").addClass("text-primary");
     // 取消文本输入框自动补全功能
     $("input").attr("autocomplete", "off");
     // 关闭页面，并刷新
