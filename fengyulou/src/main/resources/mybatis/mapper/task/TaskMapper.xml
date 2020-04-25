@@ -62,7 +62,7 @@
                 and fengyulou_task.finish_time=#{finishTime}
             </if>
         </where>
-        order by fengyulou_task.id desc
+        order by fengyulou_task.status,fengyulou_task.id desc
     </select>
     <select id="getTaskById" resultType="com.guoguo.fengyulou.entity.task.Task">
         select
