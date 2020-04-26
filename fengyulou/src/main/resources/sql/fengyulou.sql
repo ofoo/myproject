@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version 5.7.27-log)
-# Date: 2020-04-23 02:23:00
+# Date: 2020-04-26 22:28:42
 # Generator: MySQL-Front 6.1  (Build 1.26)
 
 
@@ -15,7 +15,7 @@ CREATE TABLE `fengyulou_member` (
   `mobile` varchar(255) DEFAULT '' COMMENT '人员手机',
   `delete` tinyint(3) NOT NULL DEFAULT '0' COMMENT '0正常 1删除',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='人员表';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='人员表';
 
 #
 # Data for table "fengyulou_member"
@@ -33,7 +33,7 @@ CREATE TABLE `fengyulou_member_label` (
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '标签名称',
   `delete` tinyint(3) NOT NULL DEFAULT '0' COMMENT '0正常 1删除',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='人员标签表';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='人员标签表';
 
 #
 # Data for table "fengyulou_member_label"
@@ -51,7 +51,7 @@ CREATE TABLE `fengyulou_project` (
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '项目名称',
   `delete` tinyint(3) NOT NULL DEFAULT '0' COMMENT '0正常 1删除',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='项目表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='项目表';
 
 #
 # Data for table "fengyulou_project"
@@ -74,7 +74,7 @@ CREATE TABLE `fengyulou_task` (
   `member_id` int(11) DEFAULT '0' COMMENT '人员id',
   `delete` tinyint(3) NOT NULL DEFAULT '0' COMMENT '0正常 1删除',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='任务表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='任务表';
 
 #
 # Data for table "fengyulou_task"
@@ -92,7 +92,7 @@ CREATE TABLE `fengyulou_task_label` (
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '标签名称',
   `delete` tinyint(3) NOT NULL DEFAULT '0' COMMENT '0正常 1删除',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='任务标签表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='任务标签表';
 
 #
 # Data for table "fengyulou_task_label"
@@ -112,7 +112,7 @@ CREATE TABLE `fengyulou_user` (
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '姓名',
   `delete` tinyint(3) NOT NULL DEFAULT '0' COMMENT '0正常 1删除',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 #
 # Data for table "fengyulou_user"
