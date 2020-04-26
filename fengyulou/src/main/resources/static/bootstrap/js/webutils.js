@@ -1,13 +1,13 @@
 $(function () {
-    $(".menu ul li").click(function(){
-        $(this).find("dl").slideToggle(200).parent().siblings().find("dl").slideUp(200);
+    $(".menu ul li").click(function () {
+        $(this).find("dl").slideToggle("fast").parent().siblings().find("dl").slideUp("fast");
         $(this).find("span i").toggleClass('action').parents().siblings().find("span i").removeClass('action');
+        $(this).addClass("text-primary");
     })
     // 左侧导航选中
-    $("[href='" + location.pathname + "']").parent().parent().show();
-    $("[href='" + location.pathname + "']").parent().parent().parent().find("span i").addClass('action');
-    $("[href='" + location.pathname + "']").parent().parent().parent().addClass("text-primary");
-    $("[href='" + location.pathname + "']").addClass("text-primary");
+    var current = $("[href='" + location.pathname + "']");
+    current.click();
+    current.addClass("text-primary");
     // 取消文本输入框自动补全功能
     $("input").attr("autocomplete", "off");
     // 关闭页面，并刷新
@@ -27,7 +27,7 @@ $(function () {
         updatePwd()
     })
     // 清空列表查询条件
-    $('#fengyulou-clear').on('click',function(){
+    $('#fengyulou-clear').on('click', function () {
         $(".search-from input[type='text']").val("");
         $(".search-from select").val(-1)
     })
