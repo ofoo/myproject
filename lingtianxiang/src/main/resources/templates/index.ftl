@@ -93,7 +93,7 @@
         <div class="col-md-6">
             <div class="well">
                 <form id="dataForm" action="/create/code" method="post">
-                    <div class="form-group">
+                    <#--<div class="form-group">
                         <label for="explain">请求地址根路径</label>
                         <input autocomplete="off" type="text" class="form-control" name="requestRootUrl" id="requestRootUrl" placeholder="请输入请求地址根路径" value="${requestRootUrl}">
                     </div>
@@ -112,7 +112,7 @@
                     <div class="form-group">
                         <label for="explain">包名称</label>
                         <input autocomplete="off" type="text" class="form-control" name="packName" id="packName" placeholder="请输入包名称" value="${packName}">
-                    </div>
+                    </div>-->
                     <div class="form-group">
                         <label for="explain">类描述</label>
                         <input autocomplete="off" type="text" class="form-control" name="explain" id="explain" placeholder="请输入类描述">

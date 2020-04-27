@@ -41,7 +41,7 @@ public class FreemarkerUtils {
             temp.process(root, stringWriter);
             str = stringWriter.toString();
             // 在指定路径生成文件
-            fileWriter = new FileWriter(filePath);
+//            fileWriter = new FileWriter(filePath);
             temp.process(root, fileWriter);
         } catch (Exception e) {
             e.printStackTrace();
