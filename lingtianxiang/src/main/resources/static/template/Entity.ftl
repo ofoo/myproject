@@ -25,9 +25,9 @@ public class ${entity?cap_first} {
      */
     private Date addTime;
     /**
-     * 用户状态 0正常 2删除
+     * 是否删除 0正常 1删除
      */
-    private Integer status;
+    private Integer delete;
     /**
      * 页码
      */
