@@ -4,9 +4,9 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.PageUtil;
 import ${packName}.dao.${entity?lower_case}.${entity?cap_first}Dao;
 import ${packName}.entity.${entity?lower_case}.${entity?cap_first};
-import ${packName}.tool.constant.${entity?cap_first}Constant;
-import ${packName}.tool.result.DataJson;
-import ${packName}.tool.result.ResultJson;
+import ${packName}.constant.${entity?lower_case}.${entity?cap_first}Constant;
+import ${packName}.common.DataJson;
+import ${packName}.common.ResultJson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

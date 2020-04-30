@@ -2,9 +2,9 @@ package ${packName}.controller.${entity?lower_case};
 
 import ${packName}.entity.${entity?lower_case}.${entity?cap_first};
 import ${packName}.service.${entity?lower_case}.${entity?cap_first}Service;
-import ${packName}.tool.constant.${entity?cap_first}Constant;
-import ${packName}.tool.result.DataJson;
-import ${packName}.tool.result.ResultJson;
+import ${packName}.constant.${entity?lower_case}.${entity?cap_first}Constant;
+import ${packName}.common.DataJson;
+import ${packName}.common.ResultJson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

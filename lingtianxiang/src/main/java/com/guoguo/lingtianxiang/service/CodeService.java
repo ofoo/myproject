@@ -52,7 +52,7 @@ public class CodeService {
             // 获取表字段值
             fieldList.add(StringUtils.toUnderlineCase(array[1]));
 
-            updateFieldList.add(StringUtils.toUnderlineCase(array[1]) + "=" + "#{"+array[1]+"}");
+            updateFieldList.add("`" + StringUtils.toUnderlineCase(array[1]) + "`" + "=" + "#{" + array[1] + "}");
 
             StringBuffer where = new StringBuffer();
             // 获取表修改SQL字段
@@ -106,7 +106,7 @@ public class CodeService {
         list.add(codeFile);
 
         // 生成constant代码
-        file = new File(code.getCodeFilePath() + "\\tool\\constant");
+        file = new File(code.getCodeFilePath() + "\\constant\\" + entity.toLowerCase());
         if (!file.exists()) {
             file.mkdirs();
         }

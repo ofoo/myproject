@@ -1,4 +1,4 @@
-package ${packName}.tool.constant;
+package ${packName}.constant.${entity?lower_case};
 
 /**
  * ${explain}常量
