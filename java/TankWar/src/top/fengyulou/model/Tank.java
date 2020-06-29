@@ -93,4 +93,15 @@ public class Tank extends VisibleImage {
         }
         return false;
     }
+
+    /**
+     * 判断是否撞到其他坦克
+     * @param x - 自身坦克的横坐标
+     * @param y - 自身坦克的纵坐标
+     * @return 撞到任意坦克，则返回true
+     */
+    boolean hitTank(int x,int y){
+        Rectangle next=new Rectangle(x,y,width,height);//创建坦克移动后的目标区域
+
+    }
 }
