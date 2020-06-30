@@ -102,6 +102,55 @@ public class Tank extends VisibleImage {
      */
     boolean hitTank(int x,int y){
         Rectangle next=new Rectangle(x,y,width,height);//创建坦克移动后的目标区域
+        List<Tank> tanks = gamePanel.getTanks();//获取所有坦克
+        for (int i = 0,length=tanks.size(); i < length; i++) {
+            Tank t = tanks.get(i);//获取tank对象
+            if (!this.equals(t)) {//如果此坦克与自身不是同一个对象
+                if (t.isAlive()&&t.hit(next)) {//如果此坦克存活并且与自身相撞
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
+    /**
+     * 移动到面板的边界
+     */
+    protected void moveToBorder(){
+        if (x<0){//如果坦克横坐标小于0
+            x=0;//让坦克横坐标等于0
+        }else if(x>gamePanel.getWidth()-width){//如果坦克横坐标超出了最大范围
+            x=gamePanel.getWidth()-width;//让坦克横坐标保持最大值
+        }
+        if (y<0){//如果坦克纵坐标小于0
+            y=0;//让坦克纵坐标等于0
+        }else if(y>gamePanel.getHeight()-height){//如果坦克纵坐标超出了最大范围
+            y=gamePanel.getHeight()-height;//让坦克纵坐标保持最大值
+        }
+    }
+
+    /**
+     * 获取坦克头点
+     * @return 头点对象
+     */
+    private Point getHeadPoint(){
+
+    }
+
+    /**
+     * 坦克是否存活
+     * @return 存活状态
+     */
+    public boolean isAlive() {
+        return alive;
+    }
+
+    /**
+     * 设置存活状态
+     * @param alive - 存活状态
+     */
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
 }
