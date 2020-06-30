@@ -70,8 +70,8 @@ public class Tank extends VisibleImage {
             setImage(leftImage);
         }
         direction = Direction.LEFT;//移动方向设为左
-        if (!hitWall(x-speed,y)&&!hitTank(x-speed,y)){//如果左移之后的位置不会撞到墙块和坦克
-            x-=speed;//横坐标递减
+        if (!hitWall(x - speed, y) && !hitTank(x - speed, y)) {//如果左移之后的位置不会撞到墙块和坦克
+            x -= speed;//横坐标递减
             moveToBorder();//判断是否移动到面板的边界
         }
     }
@@ -79,13 +79,13 @@ public class Tank extends VisibleImage {
     /**
      * 向右移动
      */
-    public void rightward(){
-        if (direction!= Direction.RIGHT) {//如果移动之前的方向不是右移
+    public void rightward() {
+        if (direction != Direction.RIGHT) {//如果移动之前的方向不是右移
             setImage(rightImage);//更换右移图片
         }
-        direction=Direction.RIGHT;//移动方向设为右
-        if (!hitWall(x+speed,y)&&!hitTank(x+speed,y)) {//如果右移之后的位置不会撞到墙块和坦克
-            x+=speed;//横坐标递增
+        direction = Direction.RIGHT;//移动方向设为右
+        if (!hitWall(x + speed, y) && !hitTank(x + speed, y)) {//如果右移之后的位置不会撞到墙块和坦克
+            x += speed;//横坐标递增
             moveToBorder();//判断是否移动到面板的边接
         }
     }
@@ -93,13 +93,13 @@ public class Tank extends VisibleImage {
     /**
      * 向上移动
      */
-    public void upward(){
-        if (direction!= Direction.UP) {//如果移动之前的方向不是上移
+    public void upward() {
+        if (direction != Direction.UP) {//如果移动之前的方向不是上移
             setImage(upImage);//更换上移图片
         }
-        direction=Direction.UP;//移动方向设为上
-        if (!hitWall(x,y-speed)&&!hitTank(x,y-speed)) {//如果上移之后的位置不会撞到墙块和坦克
-            y-=speed;//横坐标递减
+        direction = Direction.UP;//移动方向设为上
+        if (!hitWall(x, y - speed) && !hitTank(x, y - speed)) {//如果上移之后的位置不会撞到墙块和坦克
+            y -= speed;//横坐标递减
             moveToBorder();//判断是否移动到面板的边接
         }
     }
@@ -107,13 +107,13 @@ public class Tank extends VisibleImage {
     /**
      * 向下移动
      */
-    public void downward(){
-        if (direction!= Direction.DOWN) {//如果移动之前的方向不是下移
+    public void downward() {
+        if (direction != Direction.DOWN) {//如果移动之前的方向不是下移
             setImage(downImage);//更换下移图片
         }
-        direction=Direction.DOWN;//移动方向设为下
-        if (!hitWall(x,y+speed)&&!hitTank(x,y+speed)) {//如果下移之后的位置不会撞到墙块和坦克
-            y+=speed;//横坐标递增
+        direction = Direction.DOWN;//移动方向设为下
+        if (!hitWall(x, y + speed) && !hitTank(x, y + speed)) {//如果下移之后的位置不会撞到墙块和坦克
+            y += speed;//横坐标递增
             moveToBorder();//判断是否移动到面板的边接
         }
     }
@@ -121,25 +121,29 @@ public class Tank extends VisibleImage {
     /**
      * 攻击冷却时间线程
      */
-    private class AttackCD extends Thread{
+    private class AttackCD extends Thread {
         @Override
         public void run() {//线程主方法
-            attackCoolDown=false;//将攻击功能设为冷却状态
+            attackCoolDown = false;//将攻击功能设为冷却状态
             try {
                 Thread.sleep(attackCoolDownTime);//休眠0.5秒
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            attackCoolDown=true;//将攻击功能解除冷却状态
+            attackCoolDown = true;//将攻击功能解除冷却状态
         }
     }
 
-    public void attack(){
+    /**
+     * 攻击
+     */
+    public void attack() {
         if (attackCoolDown) {//如果攻击功能完成冷却
             Point p = getHeadPoint();//获取坦克头点对象
             //在坦克头位置发射与坦克角度相同的子弹
-            Bullet b = new Bullet(p.x-Bullet.LENGTH/2,p.y-Bullet.LENGTH/2,direction,gamePanel,type);
-            gamePanel.addB
+            Bullet b = new Bullet(p.x - Bullet.LENGTH / 2, p.y - Bullet.LENGTH / 2, direction, gamePanel, type);
+            gamePanel.addBullet(b);//游戏面板添加子弹
+            new AttackCD().start();//攻击功能开始冷却
         }
     }
 
@@ -247,5 +251,23 @@ public class Tank extends VisibleImage {
      */
     public void setAlive(boolean alive) {
         this.alive = alive;
+    }
+
+    /**
+     * 获取攻击功能是否处于冷却
+     *
+     * @return 攻击是否冷却
+     */
+    public boolean isAttackCoolDown() {
+        return attackCoolDown;
+    }
+
+    /**
+     * 设置攻击冷却时间
+     *
+     * @param attackCoolDownTime - 冷却毫秒数
+     */
+    public void setAttackCoolDownTime(int attackCoolDownTime) {
+        this.attackCoolDownTime = attackCoolDownTime;
     }
 }

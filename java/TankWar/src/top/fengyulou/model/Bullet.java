@@ -12,7 +12,7 @@ import java.util.List;
  * 子弹类
  */
 public class Bullet extends VisibleImage {
-    Direction direction;
+    Direction direction;//移动方向
     static final int LENGTH=8;//子弹的（正方体）边长
     private GamePanel gamePanel;//游戏面板
     private int speed=7;//移动速度
@@ -20,6 +20,14 @@ public class Bullet extends VisibleImage {
     Color color = Color.ORANGE;//子弹颜色，橙色
     TankType owner;//发出子弹的坦克类型
 
+    /**
+     * 子弹构造方法
+     * @param x - 子弹的初始化横坐标
+     * @param y - 子弹的初始化纵坐标
+     * @param direction - 子弹发射方向
+     * @param gamePanel - 游戏面板对象
+     * @param owner - 发出子弹的坦克类型
+     */
     public Bullet(int x,int y,Direction direction,GamePanel gamePanel,TankType owner){
         super(x,y,LENGTH,LENGTH);//调用父类构造方法
         this.direction=direction;
@@ -85,7 +93,9 @@ public class Bullet extends VisibleImage {
         moveToBorder();//移动出面板边界时销毁子弹
     }
 
-
+    /**
+     * 向上移动
+     */
     private void upward() {
         y-=speed;//纵坐标减少
         moveToBorder();//移动出面板边界时销毁子弹
