@@ -2,8 +2,6 @@ package top.fengyulou.model.wall;
 
 import top.fengyulou.model.VisibleImage;
 
-import java.util.Objects;
-
 /**
  * 砖墙类
  */
