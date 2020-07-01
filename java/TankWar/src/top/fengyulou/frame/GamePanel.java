@@ -57,6 +57,78 @@ public class GamePanel extends JPanel implements KeyListener {
         addListener();//开启监听
     }
 
+    public void paint(Graphics g){
+        paintTan
+
+    }
+
+    /**
+     * 根据按键按下状态，让坦克执行相应动作
+     */
+    private void paintTankAction(){
+        if (y_key) {//如果“Y”键是按下状态
+            play1.attack();//玩家坦克1攻击
+        }
+        if (w_key) {//如果“W”键是按下状态
+            play1.upward();//玩家1坦克向上移动
+        }
+        if (d_key) {//如果“D”键是按下状态
+            play1.rightward();//玩家1坦克向右移动
+        }
+        if (a_key) {//如果“A”键是按下状态
+            play1.leftward();//玩家1坦克左移动
+        }
+        if (s_key) {//如果“S”键是按下状态
+            play1.downward();//玩家1坦克向下移动
+        }
+        if (gameType==GameType.TWO_PLAYER){
+            if (num1_key) {//如果“M”键是按下状态
+                play2.attack();//玩家2坦克攻击
+            }
+            if (up_key) {//如果“←”键是按下状态
+                play2.upward();//玩家2坦克向上移动
+            }
+            if (right_key) {//如果“→”键是按下状态
+                play2.rightward();//玩家2坦克向右移动
+            }
+            if (left_key) {//如果“↑”键是按下状态
+                play2.leftward();//玩家2坦克左移动
+            }
+            if (down_key) {//如果“↓”键是按下状态
+                play2.downward();//玩家2坦克后移动
+            }
+        }
+    }
+
+    /**
+     * 添加电脑坦克，如果场上坦克未到达最大值，每4秒钟之后在三个出生位置随机选择其一，创建电脑坦克。
+     */
+    private void CreateBot(){
+        createBotTimer+=FRESH;//计时器按照刷新时间递增
+        //“当场上电脑小于场上最大数时” 并且 “准备上场的坦克数量大于0” 并且 “计时器记录已过去4秒钟”
+        if (botTanks.size()<botMaxInMap&&botReadyCount>0&&createBotTimer>=4000) {
+            int index = r.nextInt(3);//随机获取0或1或2其中一个值
+            Rectangle bornRect=new Rectangle(botX[index],1,35,35);//创建坦克随机出生区域
+            for (int i = 0,length=allTanks.size(); i < length; i++) {//循环遍历所有坦克集合
+                Tank t =allTanks.get(i);//获取坦克对象
+                if (t.isAlive()&&t.hit(bornRect)){//如果场上存在与随机位置重合并存活的坦克
+                    return;//结束方法
+                }
+            }
+            botTanks.add(new Bot(botX[index],1,GamePanel.this,TankType.bot));//在随机位置创造电脑坦克
+            botReadyCount--;//准备上场电脑数量-1
+            createBotTimer=0;//产生电脑计时器重新计时
+        }
+    }
+
+    /**
+     * 绘制主图片
+     */
+    private void paintImage(){
+        g2.setColor(Color.WHITE);//使用白色
+        g2.fillRect(0,0,image.getWidth(),image.getHeight());//填充一个覆盖整个图片的白色矩形
+    }
+
     /**
      * 组件初始化
      */
