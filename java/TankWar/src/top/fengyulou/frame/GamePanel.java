@@ -57,9 +57,15 @@ public class GamePanel extends JPanel implements KeyListener {
         addListener();//开启监听
     }
 
+    /**
+     * 重写绘制组件方法
+     * @param g
+     */
     public void paint(Graphics g){
-        paintTan
-
+        paintTankAction();//执行坦克动作
+        CreateBot();//循环创建电脑坦克
+        paintImage();//绘制主图片
+        g.drawImage(image,0,0,this);//将主图片绘制到面板上
     }
 
     /**
@@ -120,6 +126,37 @@ public class GamePanel extends JPanel implements KeyListener {
             createBotTimer=0;//产生电脑计时器重新计时
         }
     }
+
+    private void paintImage(){
+        g2.setColor(Color.WHITE);//使用白色
+        g2.fillRect(0,0,image.getWidth(),image.getHeight());//填充一个覆盖整个图片的白色贵姓
+        panitBoom();//绘制爆炸效果
+        paintBotCount();//在屏幕顶部绘制剩余坦克数量
+    }
+
+    /**
+     * 在屏幕顶部绘制剩余坦克数量
+     */
+    private void paintBotCount(){
+        g2.
+    }
+
+    /**
+     * 绘制爆炸效果
+     */
+    private void panitBoom(){
+        for (int i = 0; i < boomImage.size(); i++) {//循环遍历爆炸效果集合
+            Boom boom = boomImage.get(i);//获取爆炸对象
+            if (boom.isAlive()) {//如果爆炸效果有效
+                boom.show(g2);//展示爆炸效果
+            }else{//如果爆炸效果无效
+                boomImage.remove(i);//在集合中刪除此爆炸对象
+                i--;//循环变量-1，保证下次循环i的值不会变成i+1，以便有效遍历集合，且防止下标越界
+            }
+        }
+    }
+
+
 
     /**
      * 绘制主图片
