@@ -127,18 +127,136 @@ public class GamePanel extends JPanel implements KeyListener {
         }
     }
 
+    /**
+     * 绘制主图片
+     */
     private void paintImage(){
         g2.setColor(Color.WHITE);//使用白色
         g2.fillRect(0,0,image.getWidth(),image.getHeight());//填充一个覆盖整个图片的白色贵姓
         panitBoom();//绘制爆炸效果
         paintBotCount();//在屏幕顶部绘制剩余坦克数量
+        panitBotTanks();//绘制电脑坦克
+        panitPlayerTanks();//绘制玩家坦克
+        allTanks.addAll(playerTanks);//坦克集合添加玩家坦克集合
+        allTanks.add(botTanks);//坦克集合添加电脑坦克集合
+        panitWalls();//绘制墙块
+        panitBullets();//绘制子弹
+
+        if (botSurplusCount==0) {//如果所有电脑都被消灭
+            stopThread();//结束游戏帧刷新线程
+            paintBotCount();//在屏幕顶部绘制剩余坦克数量
+            g2.setFont(new Font("楷体",Font.BOLD,50));//设置绘图字体
+            g2.setColor(Color.green);//使用绿色
+            g2.drawString("胜   利 !",250,400);//在指定坐标绘制文字
+            gotoNextLevel();//进入下一关卡
+        }
+
+        if (gameType== GameType.ONE_PLAYER) {//如果是单人模式
+            if (!play1.isAlive()) {//如果玩家阵亡
+                stopThread();//结束游戏帧刷新线程
+                boomImage.add(new Boom(play1.x,play1.y));//添加玩家1爆炸效果
+                panitBoom();//绘制爆炸效果
+                paintGameOver();//在屏幕中央绘制game over
+                gotoPrevisousLevel();//重新进入本关卡
+            }
+        }else{//如果是双人模式
+            if (play1.isAlive()&&!play2.isAlive()) {//如果玩家1是 幸存者
+                survivor=play1;//幸存者是玩家1
+            }else if(!play1.isAlive()&&play2.isAlive()){
+                survivor=play2;//幸存者是玩家2
+            }else if(!play1.isAlive()&&!play2.isAlive()){//如果两个玩家全部阵亡
+                stopThread();//结束游戏帧刷新线程
+                boomImage.add(new Boom(survivor.x,survivor.y));//添加幸存者爆炸效果
+                panitBoom();//绘制爆炸效果
+                paintGameOver();//在屏幕中央绘制game over
+                gotoPrevisousLevel();//重新进入本关卡
+            }
+        }
+
+        if (!base.isAlive()) {//如果基地被击中
+            stopThread();//结束游戏帧刷新线程
+            paintGameOver();//在屏幕中央绘制game over
+            base.setImage(ImageUtil.BREAK_BASE_IMAGE_URL);//基地使用阵亡图片
+            gotoPrevisousLevel();//重新进入本关卡
+        }
+        g2.drawImage(base.getImage(),base.x,base.y,this);//绘制基地
+    }
+
+    /**
+     * 绘制子弹
+     */
+    private void panitBullets(){
+        for (int i = 0; i < bullets.size(); i++) {//循环遍历子弹集合
+            Bullet b = bullets.get(i);//获取子弹对象
+            if (b.isAlive()) {//如果子弹有效
+                b.move();//子弹执行移动操作
+
+            }
+        }
+    }
+
+    /**
+     * 绘制墙块
+     */
+    private void panitWalls(){
+        for (int i = 0; i < walls.size(); i++) {//循环遍历墙块集合
+            Wall w = walls.get(i);//获取墙块对象
+            if (w.isAlive()) {//如果墙块有效
+                g2.drawImage(w.getImage(),w.x,w.y,this);//绘制墙块
+            }else{//如果墙块无效
+                walls.remove(i);//在集合中刪除此墙块
+                i--;//循环变量-1，保证下次循环i的值不会变成i+1，以便有效遍历集合，且防止下标越界
+            }
+        }
+    }
+
+    /**
+     * 绘制电脑坦克
+     */
+    private void panitBotTanks(){
+        for (int i = 0; i < botTanks.size(); i++) {//循环遍历电脑坦克集合
+            Bot t = (Bot) botTanks.get(i);//获取电脑坦克对象
+            if (t.isAlive()) {//如果坦克存活
+                t.go();//电脑坦克展开行动
+                g2.drawImage(t.getImage(),t.x,t.y,this);//绘制坦克
+            }else{//如果坦克阵亡
+                botTanks.remove(i);//集合中删除此坦克
+                i--;//循环变量-1，保证下次循环i的值不会变成i+1，以便有效遍历集合，且防止下标越界
+                boomImage.add(new Boom(t.x,t.y));//在坦克位置创建爆炸效果
+                decreaseBot();//剩余坦克数量-1
+            }
+        }
+    }
+
+    /**
+     * 绘制玩家坦克
+     */
+    private void panitPlayerTanks(){
+        for (int i = 0; i < playerTanks.size(); i++) {//循环遍历玩家坦克
+            Tank t = playerTanks.get(i);//获取玩家坦克对象
+            if (t.isAlive()) {//如果坦克存活
+                g2.drawImage(t.getImage(),t.x,t.y,this);//绘制坦克
+            }else{//如果坦克阵亡
+                playerTanks.remove(i);//集合中删除此坦克
+                i--;//循环变量-1，保证下次循环i的值不会变成i+1，以便有效遍历集合，且防止下标越界
+                boomImage.add(new Boom(t.x,t.y));//在坦克位置创建爆炸效果
+            }
+        }
+    }
+
+    /**
+     * 剩余坦克数量减少1
+     */
+    public void decreaseBot(){
+        botSurplusCount--;//电脑剩余数量-1
     }
 
     /**
      * 在屏幕顶部绘制剩余坦克数量
      */
     private void paintBotCount(){
-        g2.
+        g2.setColor(Color.BLUE);//使用蓝色
+        g2.drawString("敌方坦克剩余："+botSurplusCount,337,15);//在指定坐标绘制字符串
     }
 
     /**
@@ -154,16 +272,6 @@ public class GamePanel extends JPanel implements KeyListener {
                 i--;//循环变量-1，保证下次循环i的值不会变成i+1，以便有效遍历集合，且防止下标越界
             }
         }
-    }
-
-
-
-    /**
-     * 绘制主图片
-     */
-    private void paintImage(){
-        g2.setColor(Color.WHITE);//使用白色
-        g2.fillRect(0,0,image.getWidth(),image.getHeight());//填充一个覆盖整个图片的白色矩形
     }
 
     /**
@@ -228,5 +336,13 @@ public class GamePanel extends JPanel implements KeyListener {
      */
     public void addBullet(Bullet b){
         bullets.add(b);//子弹集合中添加子弹
+    }
+
+    /**
+     * 获取基地对象
+     * @return 基地
+     */
+    public Base getBase() {
+        return base;
     }
 }

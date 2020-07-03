@@ -113,6 +113,17 @@ public class Bullet extends VisibleImage {
     }
 
     /**
+     * 击中基地
+     */
+    public void hitBase(){
+        Base b = gamePanel.getBase();//获取基地
+        if (this.hit(b)) {//如果子弹击中基地
+            alive=false;//子弹销毁
+            b.setAlive(false);//基地阵亡
+        }
+    }
+
+    /**
      * 移动出面板边界时销毁子弹
      */
     private void moveToBorder() {
