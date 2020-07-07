@@ -1,5 +1,6 @@
 package top.fengyulou.frame;
 
+import top.fengyulou.model.Level;
 import top.fengyulou.type.GameType;
 import top.fengyulou.util.ImageUtil;
 
@@ -53,6 +54,15 @@ public class LoginPanel extends JPanel implements KeyListener {
     }
 
     /**
+     * 键入某按键事件
+     * @param e
+     */
+    @Override
+    public void keyTyped(KeyEvent e) {
+        //不实现此方法，但不可删除
+    }
+
+    /**
      * 当按键按下时
      * @param e
      */
@@ -85,11 +95,20 @@ public class LoginPanel extends JPanel implements KeyListener {
     }
 
     /**
+     * 按键抬起时
+     * @param e
+     */
+    @Override
+    public void keyReleased(KeyEvent e) {
+        //不实现此方法，但不可删除
+    }
+
+    /**
      * 跳转关卡面板
      */
     private void gotoLevelPanel(){
         frame.removeKeyListener(this);//主窗体删除键盘监听
-        frame.setPanel(new LevelPanel(LevelPanel.nex));
+        frame.setPanel(new LevelPanel(Level.nextLevel(),frame,type));//主窗体跳转至关卡面板
     }
 
     /**
@@ -98,4 +117,6 @@ public class LoginPanel extends JPanel implements KeyListener {
     private void addListener() {
         frame.addKeyListener(this);//主窗体载入键盘监听，本类已实现KeyListener接口
     }
+
+
 }
